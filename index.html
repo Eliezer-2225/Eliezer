@@ -1,159 +1,980 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Send Message</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2019 STRATEGIC PLAN PORTAL</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
     body {
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      color: #f8fafc;
+      min-height: 100vh;
+      width: 100vw;
+      background: #030712;
+      color: #f9fafb;
+      overflow-x: hidden;
+      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      padding: 20px;
+      padding: 20px 0;
     }
 
-    .card {
-      background: #1e293b;
-      border: 1px solid #334155;
-      padding: 30px;
-      border-radius: 16px;
+    /* Ambient Lighting Background Glows */
+    .bg-glow-1 {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.2) 0%, rgba(99, 102, 241, 0.1) 50%, transparent 70%);
+      top: 10%;
+      left: 10%;
+      filter: blur(90px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .bg-glow-2 {
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.18) 0%, rgba(236, 72, 153, 0.08) 50%, transparent 70%);
+      bottom: 10%;
+      right: 10%;
+      filter: blur(90px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Auth Card Container */
+    .portal-card {
+      position: relative;
+      z-index: 10;
+      width: 92%;
+      max-width: 460px;
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 30px;
+      padding: 42px 32px;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.85);
+      transition: all 0.4s ease;
+    }
+
+    .plan-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .plan-year-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(99, 102, 241, 0.2));
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 30px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #38bdf8;
+      letter-spacing: 1.5px;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+
+    .portal-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.65rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #38bdf8 0%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .portal-subtitle {
+      font-size: 0.85rem;
+      color: #9ca3af;
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-input {
       width: 100%;
-      max-width: 450px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      padding: 15px 65px 15px 18px;
+      background: rgba(3, 7, 18, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 14px;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.25s ease;
     }
 
-    .card h2 {
+    .form-input:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.18);
+      background: rgba(3, 7, 18, 0.9);
+    }
+
+    .toggle-badge {
+      position: absolute;
+      right: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 5px 9px;
+      border-radius: 6px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .forgot-link {
+      display: block;
+      text-align: right;
+      font-size: 0.82rem;
+      color: #38bdf8;
+      margin-top: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .forgot-link:hover {
+      text-decoration: underline;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      margin-top: 15px;
+      background: linear-gradient(135deg, #0284c7 0%, #6366f1 100%);
+      border: none;
+      border-radius: 14px;
+      color: #ffffff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(2, 132, 199, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba(2, 132, 199, 0.5);
+    }
+
+    .alert-box {
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 18px;
+      display: none;
+      text-align: center;
+    }
+
+    .alert-error {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #f87171;
+    }
+
+    .alert-success {
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      color: #4ade80;
+    }
+
+    /* DASHBOARD PAGE STYLES */
+    .dashboard-view {
+      display: none;
+      width: 100%;
+    }
+
+    .dash-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .dash-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      color: #38bdf8;
+    }
+
+    .logout-btn {
+      padding: 6px 14px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Yearly Definition Box */
+    .definition-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+
+    .definition-box h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
       color: #38bdf8;
       margin-bottom: 8px;
-      font-size: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .card p {
-      color: #94a3b8;
-      font-size: 14px;
-      margin-bottom: 24px;
-    }
-
-    .form-group {
-      margin-bottom: 18px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 14px;
+    .definition-box p {
+      font-size: 0.88rem;
       color: #cbd5e1;
+      line-height: 1.6;
     }
 
-    input, textarea {
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .plan-card-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 18px;
+      transition: all 0.25s ease;
+    }
+
+    .plan-card-item:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .card-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #818cf8;
+      background: rgba(129, 140, 248, 0.12);
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .plan-card-item h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      color: #f3f4f6;
+      margin-bottom: 6px;
+    }
+
+    .plan-card-item p {
+      font-size: 0.82rem;
+      color: #9ca3af;
+      line-height: 1.4;
+    }
+
+    /* Secure Protected Keys Section */
+    .secure-section {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.15);
+    }
+
+    .secure-section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      color: #e2e8f0;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .secure-btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .secure-key-btn {
       width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #334155;
-      background: #0f172a;
-      color: #fff;
-      font-size: 14px;
-      outline: none;
-      transition: border 0.3s;
-    }
-
-    input:focus, textarea:focus {
-      border-color: #38bdf8;
-    }
-
-    textarea {
-      resize: vertical;
-      height: 100px;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      background: #0284c7;
-      color: white;
-      font-weight: bold;
-      font-size: 16px;
+      padding: 15px;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(234, 179, 8, 0.35);
+      border-radius: 14px;
+      color: #fef08a;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
       cursor: pointer;
-      transition: background 0.3s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.25s ease;
     }
 
-    button:hover {
-      background: #0369a1;
+    .secure-key-btn:hover {
+      border-color: rgba(234, 179, 8, 0.8);
+      background: rgba(234, 179, 8, 0.1);
+      transform: translateY(-2px);
     }
 
-    .status-msg {
+    /* Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(3, 7, 18, 0.92);
+      backdrop-filter: blur(18px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      width: 90%;
+      max-width: 440px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 28px;
+      padding: 35px 28px;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.85);
+    }
+
+    .modal-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-bottom: 6px;
+    }
+
+    .modal-desc {
+      font-size: 0.85rem;
+      color: #9ca3af;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .close-btn {
+      float: right;
+      background: none;
+      border: none;
+      color: #9ca3af;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .secret-content-box {
+      background: rgba(3, 7, 18, 0.7);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: 14px;
+      padding: 16px;
       margin-top: 15px;
-      text-align: center;
-      font-size: 14px;
-      color: #4ade80;
+      color: #86efac;
+      font-size: 0.88rem;
+      line-height: 1.5;
       display: none;
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h2>✨ Get in Touch</h2>
-    <p>Fill out the form below to send your message.</p>
+  <div class="bg-glow-1"></div>
+  <div class="bg-glow-2"></div>
 
-    <form id="userForm">
-      <div class="form-group">
-        <label for="name">Your Name</label>
-        <input type="text" id="name" placeholder="Enter your name" required>
+  <div class="portal-card" id="main-container">
+    
+    <!-- LOGIN / AUTH VIEW -->
+    <div id="auth-view">
+      <div class="plan-header">
+        <span class="plan-year-badge">⚡ 2019 STRATEGIC PLAN</span>
+        <h1 class="portal-title">PERSONAL PLAN PORTAL</h1>
+        <p class="portal-subtitle">Goal Execution & Management System</p>
       </div>
 
-      <div class="form-group">
-        <label for="message">Your Message</label>
-        <textarea id="message" placeholder="Type your message here..." required></textarea>
+      <div id="auth-alert" class="alert-box alert-error">Username or password is not correct.</div>
+
+      <form id="auth-form" onsubmit="handleAuthSubmit(event)">
+        <div class="form-group">
+          <label>Username</label>
+          <div class="input-wrapper">
+            <input type="text" id="username" class="form-input" placeholder="Enter username" required autocomplete="off" />
+            <span class="toggle-badge" id="badge-username" onclick="togglePassword('username', 'badge-username')">SHOW</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <div class="input-wrapper">
+            <input type="password" id="password" class="form-input" placeholder="Enter password" required />
+            <span class="toggle-badge" id="badge-password" onclick="togglePassword('password', 'badge-password')">SHOW</span>
+          </div>
+          <a class="forgot-link" onclick="openForgotModal()">Forgot Password?</a>
+        </div>
+
+        <button type="submit" id="main-submit-btn" class="btn-submit">SIGN IN</button>
+      </form>
+    </div>
+
+    <!-- MAIN DASHBOARD PAGE (AFTER LOGIN SUCCESS) -->
+    <div id="dashboard-view" class="dashboard-view">
+      <div class="dash-header">
+        <div>
+          <span class="plan-year-badge" style="margin:0;">2019 PORTAL</span>
+          <h2 class="dash-title" id="welcome-user-text">WELCOME!</h2>
+        </div>
+        <button class="logout-btn" onclick="handleLogout()">LOGOUT</button>
       </div>
 
-      <button type="submit" id="submitBtn">Send Message</button>
-      <div class="status-msg" id="statusMsg">Sent successfully! Thank you.</div>
-    </form>
+      <!-- 1. YEARLY PLAN DEFINITION TEXT -->
+      <div class="definition-box">
+        <h3>📌 2019 Strategic Roadmap & Definition</h3>
+        <p>
+          The 2019 Strategic Plan is designed as a foundational blueprint focused on personal mastery, high-performance skill acquisition, advanced software engineering practices, and structured financial literacy. The primary objective is to execute daily actionable micro-goals that compound into major long-term milestones.
+        </p>
+      </div>
+
+      <!-- 2. CORE PLAN CARDS GRID -->
+      <div class="cards-grid">
+        <div class="plan-card-item">
+          <span class="card-badge">Module 01</span>
+          <h4>🎓 Academic & Knowledge Growth</h4>
+          <p>Mastering core engineering, science fundamentals, logical SAT aptitude, and continuous study schedules.</p>
+        </div>
+
+        <div class="plan-card-item">
+          <span class="card-badge">Module 02</span>
+          <h4>💻 Software & Web Engineering</h4>
+          <p>Developing high-performance Progressive Web Applications (PWA), clean UI architecture, and Spck mobile workflows.</p>
+        </div>
+
+        <div class="plan-card-item">
+          <span class="card-badge">Module 03</span>
+          <h4>💪 Physical & Tactical Fitness</h4>
+          <p>Maintaining structured daily workouts, discipline routines, physical conditioning, and martial arts training.</p>
+        </div>
+      </div>
+
+      <!-- 3. TWO SECURE PROTECTED KEYS -->
+      <div class="secure-section">
+        <div class="secure-section-title">
+          🔒 Secure Protected Vaults (Passcode Required)
+        </div>
+
+        <div class="secure-btn-group">
+          <button class="secure-key-btn" onclick="openSecureModal(1)">
+            <span>🔑 Key 1: Private Personal Vault</span>
+            <span>PROTECTED 🔒</span>
+          </button>
+
+          <button class="secure-key-btn" onclick="openSecureModal(2)">
+            <span>🔑 Key 2: Financial & Forex Strategy</span>
+            <span>PROTECTED 🔒</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+  <!-- SECURE KEY LOCK MODAL -->
+  <div class="modal-overlay" id="secure-lock-modal">
+    <div class="modal-card">
+      <button class="close-btn" onclick="closeSecureModal()">✕</button>
+      <h2 class="modal-title" id="secure-modal-title">🔒 Protected Key Access</h2>
+      <p class="modal-desc" id="secure-modal-desc">Enter account password to unlock this secure plan vault.</p>
 
-    const firebaseConfig = {
-      databaseURL: "https://eliezer-6f8aa-default-rtdb.firebaseio.com/"
+      <div id="secure-err" class="alert-box alert-error"></div>
+
+      <form id="secure-lock-form" onsubmit="handleUnlockVault(event)">
+        <div class="form-group">
+          <label>Confirm Your Password</label>
+          <div class="input-wrapper">
+            <input type="password" id="vault-passcode" class="form-input" placeholder="Enter password" required />
+            <span class="toggle-badge" id="badge-vault" onclick="togglePassword('vault-passcode', 'badge-vault')">SHOW</span>
+          </div>
+        </div>
+        <button type="submit" class="btn-submit">UNLOCK VAULT</button>
+      </form>
+
+      <div id="secret-content" class="secret-content-box">
+        <!-- Dynamic Unlocked Content Inserted Here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- FIRST TIME SETUP MODAL -->
+  <div class="modal-overlay" id="first-time-modal">
+    <div class="modal-card">
+      <h2 class="modal-title">🔐 First Time Setup</h2>
+      <p class="modal-desc">First time signing in on this device. Please update default password (777) to your secret password.</p>
+
+      <div id="setup-err" class="alert-box alert-error"></div>
+      <div id="setup-succ" class="alert-box alert-success"></div>
+
+      <form onsubmit="handleFirstTimeSetup(event)">
+        <div class="form-group">
+          <label>Current Password</label>
+          <div class="input-wrapper">
+            <input type="password" id="curr-pwd" class="form-input" placeholder="Enter 777" required />
+            <span class="toggle-badge" id="badge-curr" onclick="togglePassword('curr-pwd', 'badge-curr')">SHOW</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>New Password</label>
+          <div class="input-wrapper">
+            <input type="password" id="new-pwd" class="form-input" placeholder="Enter new password" required />
+            <span class="toggle-badge" id="badge-new" onclick="togglePassword('new-pwd', 'badge-new')">SHOW</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <div class="input-wrapper">
+            <input type="password" id="confirm-pwd" class="form-input" placeholder="Confirm new password" required />
+            <span class="toggle-badge" id="badge-conf" onclick="togglePassword('confirm-pwd', 'badge-conf')">SHOW</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">SAVE NEW PASSWORD</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SECURITY QUESTIONS SETUP MODAL -->
+  <div class="modal-overlay" id="sec-questions-modal">
+    <div class="modal-card">
+      <h2 class="modal-title">🛡️ Security Questions</h2>
+      <p class="modal-desc">Setup recovery answers in case you forget your password in the future:</p>
+
+      <form onsubmit="handleSaveSecurityQuestions(event)">
+        <div class="form-group">
+          <label>1. Previous Password</label>
+          <input type="text" id="sec-prev-pwd" class="form-input" placeholder="e.g. 777" required />
+        </div>
+
+        <div class="form-group">
+          <label>2. Favorite Food</label>
+          <input type="text" id="sec-food" class="form-input" placeholder="e.g. Pizza" required />
+        </div>
+
+        <div class="form-group">
+          <label>3. Favorite Color</label>
+          <input type="text" id="sec-color" class="form-input" placeholder="e.g. Blue" required />
+        </div>
+
+        <div class="form-group">
+          <label>4. Date of Birth</label>
+          <input type="text" id="sec-dob" class="form-input" placeholder="e.g. 15/08/2005" required />
+        </div>
+
+        <button type="submit" class="btn-submit">COMPLETE SETUP</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FORGOT PASSWORD MODAL -->
+  <div class="modal-overlay" id="forgot-modal">
+    <div class="modal-card">
+      <button class="close-btn" onclick="closeForgotModal()">✕</button>
+      <h2 class="modal-title">🔑 Account Recovery</h2>
+      <p class="modal-desc">Answer at least one security question to verify ownership:</p>
+
+      <div id="forgot-err" class="alert-box alert-error"></div>
+
+      <form onsubmit="handleVerifyRecovery(event)">
+        <div class="form-group">
+          <label>Option A: Previous Password</label>
+          <input type="text" id="rec-prev-pwd" class="form-input" placeholder="Enter previous password" />
+        </div>
+
+        <div class="form-group">
+          <label>Option B: Favorite Food</label>
+          <input type="text" id="rec-food" class="form-input" placeholder="Enter favorite food" />
+        </div>
+
+        <div class="form-group">
+          <label>Option C: Favorite Color</label>
+          <input type="text" id="rec-color" class="form-input" placeholder="Enter favorite color" />
+        </div>
+
+        <div class="form-group">
+          <label>Option D: Date of Birth</label>
+          <input type="text" id="rec-dob" class="form-input" placeholder="Enter date of birth" />
+        </div>
+
+        <button type="submit" class="btn-submit">VERIFY & RESET</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- RESET PASSWORD MODAL -->
+  <div class="modal-overlay" id="reset-modal">
+    <div class="modal-card">
+      <h2 class="modal-title">✨ Create New Password</h2>
+      <p class="modal-desc">Verification successful. Please enter your new password:</p>
+
+      <div id="reset-err" class="alert-box alert-error"></div>
+      <div id="reset-succ" class="alert-box alert-success"></div>
+
+      <form onsubmit="handleResetPassword(event)">
+        <div class="form-group">
+          <label>New Password</label>
+          <input type="password" id="reset-new-pwd" class="form-input" placeholder="Enter new password" required />
+        </div>
+
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" id="reset-confirm-pwd" class="form-input" placeholder="Confirm new password" required />
+        </div>
+
+        <button type="submit" class="btn-submit">RESET PASSWORD</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const DEFAULT_USER = "eyael";
+    const DEFAULT_PASS = "777";
+
+    function getDeviceConfig() {
+      const saved = localStorage.getItem('plan_2019_portal_config');
+      if (!saved) {
+        const initialConfig = {
+          username: DEFAULT_USER,
+          currentPassword: DEFAULT_PASS,
+          isConfigured: false,
+          securityQuestions: null
+        };
+        localStorage.setItem('plan_2019_portal_config', JSON.stringify(initialConfig));
+        return initialConfig;
+      }
+      return JSON.parse(saved);
+    }
+
+    function saveDeviceConfig(config) {
+      localStorage.setItem('plan_2019_portal_config', JSON.stringify(config));
+    }
+
+    function togglePassword(inputId, badgeId) {
+      const input = document.getElementById(inputId);
+      const badge = document.getElementById(badgeId);
+      if (input.type === "password") {
+        input.type = "text";
+        badge.innerText = "HIDE";
+      } else {
+        input.type = "password";
+        badge.innerText = "SHOW";
+      }
+    }
+
+    window.onload = function() {
+      const config = getDeviceConfig();
+      const mainBtn = document.getElementById('main-submit-btn');
+      if (!config.isConfigured) {
+        mainBtn.innerText = "SIGN IN";
+      } else {
+        mainBtn.innerText = "LOGIN";
+      }
     };
 
-    const app = initializeApp(firebaseConfig);
-    const database = getDatabase(app);
+    let activeUser = "";
+    let selectedVaultKey = null;
 
-    const form = document.getElementById('userForm');
-    const statusMsg = document.getElementById('statusMsg');
-
-    form.addEventListener('submit', (e) => {
+    function handleAuthSubmit(e) {
       e.preventDefault();
-      
-      const name = document.getElementById('name').value;
-      const message = document.getElementById('message').value;
+      const userVal = document.getElementById('username').value.trim();
+      const passVal = document.getElementById('password').value.trim();
+      const alertBox = document.getElementById('auth-alert');
 
-      push(ref(database, 'messages'), {
-        name: name,
-        message: message,
-        timestamp: new Date().toLocaleTimeString()
-      }).then(() => {
-        statusMsg.style.display = 'block';
-        form.reset();
-        setTimeout(() => { statusMsg.style.display = 'none'; }, 3000);
-      });
-    });
+      const config = getDeviceConfig();
+
+      if (userVal.toLowerCase() !== config.username.toLowerCase() || passVal !== config.currentPassword) {
+        alertBox.innerText = "Username or password is not correct.";
+        alertBox.style.display = 'block';
+        return;
+      }
+
+      alertBox.style.display = 'none';
+      activeUser = userVal;
+
+      if (!config.isConfigured) {
+        document.getElementById('first-time-modal').classList.add('active');
+      } else {
+        showDashboard(activeUser);
+      }
+    }
+
+    function showDashboard(username) {
+      document.getElementById('auth-view').style.display = 'none';
+      document.getElementById('dashboard-view').style.display = 'block';
+      document.getElementById('main-container').style.maxWidth = '600px'; // Expand width for dashboard
+      document.getElementById('welcome-user-text').innerText = `WELCOME, ${username.toUpperCase()}!`;
+    }
+
+    function handleLogout() {
+      document.getElementById('dashboard-view').style.display = 'none';
+      document.getElementById('auth-view').style.display = 'block';
+      document.getElementById('main-container').style.maxWidth = '460px';
+      document.getElementById('password').value = '';
+    }
+
+    /* SECURE VAULT KEYS LOGIC */
+    function openSecureModal(keyNumber) {
+      selectedVaultKey = keyNumber;
+      document.getElementById('vault-passcode').value = '';
+      document.getElementById('secure-err').style.display = 'none';
+      document.getElementById('secret-content').style.display = 'none';
+      document.getElementById('secure-lock-form').style.display = 'block';
+
+      if (keyNumber === 1) {
+        document.getElementById('secure-modal-title').innerText = "🔒 Key 1: Private Personal Vault";
+        document.getElementById('secure-modal-desc').innerText = "Enter your passcode to unlock private goals & personal logs.";
+      } else {
+        document.getElementById('secure-modal-title').innerText = "🔒 Key 2: Financial & Forex Strategy";
+        document.getElementById('secure-modal-desc').innerText = "Enter your passcode to view currency strategies, pips & lot risk management.";
+      }
+
+      document.getElementById('secure-lock-modal').classList.add('active');
+    }
+
+    function closeSecureModal() {
+      document.getElementById('secure-lock-modal').classList.remove('active');
+    }
+
+    function handleUnlockVault(e) {
+      e.preventDefault();
+      const pass = document.getElementById('vault-passcode').value.trim();
+      const config = getDeviceConfig();
+      const errBox = document.getElementById('secure-err');
+
+      if (pass !== config.currentPassword) {
+        errBox.innerText = "Incorrect passcode. Access denied.";
+        errBox.style.display = 'block';
+        return;
+      }
+
+      errBox.style.display = 'none';
+      document.getElementById('secure-lock-form').style.display = 'none';
+      const contentBox = document.getElementById('secret-content');
+
+      if (selectedVaultKey === 1) {
+        contentBox.innerHTML = `
+          <strong>🔓 PRIVATE VAULT UNLOCKED:</strong><br>
+          • Personal mindset & habit trackers.<br>
+          • Daily self-reflection logs.<br>
+          • Long-term vision notes and private milestones.
+        `;
+      } else {
+        contentBox.innerHTML = `
+          <strong>🔓 FOREX & FINANCIAL VAULT UNLOCKED:</strong><br>
+          • MetaTrader Chart Analysis & Pip Targets.<br>
+          • Risk-to-Reward ratio setup (1:2 minimum).<br>
+          • Strict lot sizing & account growth rules.
+        `;
+      }
+      contentBox.style.display = 'block';
+    }
+
+    /* FIRST TIME & RECOVERY HANDLERS */
+    function handleFirstTimeSetup(e) {
+      e.preventDefault();
+      const currPwd = document.getElementById('curr-pwd').value.trim();
+      const newPwd = document.getElementById('new-pwd').value.trim();
+      const confirmPwd = document.getElementById('confirm-pwd').value.trim();
+
+      const errBox = document.getElementById('setup-err');
+      const succBox = document.getElementById('setup-succ');
+
+      const config = getDeviceConfig();
+      errBox.style.display = 'none'; succBox.style.display = 'none';
+
+      if (currPwd !== config.currentPassword) {
+        errBox.innerText = "Current password is not correct.";
+        errBox.style.display = 'block'; return;
+      }
+
+      if (newPwd.length < 3) {
+        errBox.innerText = "Password must be at least 3 characters long.";
+        errBox.style.display = 'block'; return;
+      }
+
+      if (newPwd !== confirmPwd) {
+        errBox.innerText = "Passwords do not match.";
+        errBox.style.display = 'block'; return;
+      }
+
+      config.currentPassword = newPwd;
+      saveDeviceConfig(config);
+
+      succBox.innerText = "Password saved successfully!";
+      succBox.style.display = 'block';
+
+      setTimeout(() => {
+        document.getElementById('first-time-modal').classList.remove('active');
+        document.getElementById('sec-questions-modal').classList.add('active');
+      }, 1000);
+    }
+
+    function handleSaveSecurityQuestions(e) {
+      e.preventDefault();
+      const config = getDeviceConfig();
+
+      config.securityQuestions = {
+        prevPassword: document.getElementById('sec-prev-pwd').value.trim().toLowerCase(),
+        food: document.getElementById('sec-food').value.trim().toLowerCase(),
+        color: document.getElementById('sec-color').value.trim().toLowerCase(),
+        dob: document.getElementById('sec-dob').value.trim().toLowerCase()
+      };
+
+      config.isConfigured = true;
+      saveDeviceConfig(config);
+
+      document.getElementById('sec-questions-modal').classList.remove('active');
+      document.getElementById('main-submit-btn').innerText = "LOGIN";
+      showDashboard(activeUser);
+    }
+
+    function openForgotModal() {
+      const config = getDeviceConfig();
+      if (!config.securityQuestions) {
+        alert("Security questions are not configured yet on this device.");
+        return;
+      }
+      document.getElementById('forgot-modal').classList.add('active');
+    }
+
+    function closeForgotModal() {
+      document.getElementById('forgot-modal').classList.remove('active');
+    }
+
+    function handleVerifyRecovery(e) {
+      e.preventDefault();
+      const config = getDeviceConfig();
+      const q = config.securityQuestions;
+      const errBox = document.getElementById('forgot-err');
+
+      const prevPwd = document.getElementById('rec-prev-pwd').value.trim().toLowerCase();
+      const food = document.getElementById('rec-food').value.trim().toLowerCase();
+      const color = document.getElementById('rec-color').value.trim().toLowerCase();
+      const dob = document.getElementById('rec-dob').value.trim().toLowerCase();
+
+      if (!prevPwd && !food && !color && !dob) {
+        errBox.innerText = "Please answer at least one question.";
+        errBox.style.display = 'block'; return;
+      }
+
+      const isMatch = (prevPwd && prevPwd === q.prevPassword) ||
+                      (food && food === q.food) ||
+                      (color && color === q.color) ||
+                      (dob && dob === q.dob);
+
+      if (isMatch) {
+        errBox.style.display = 'none';
+        closeForgotModal();
+        document.getElementById('reset-modal').classList.add('active');
+      } else {
+        errBox.innerText = "Verification failed. Answer does not match.";
+        errBox.style.display = 'block';
+      }
+    }
+
+    function handleResetPassword(e) {
+      e.preventDefault();
+      const newPwd = document.getElementById('reset-new-pwd').value.trim();
+      const confirmPwd = document.getElementById('reset-confirm-pwd').value.trim();
+      const errBox = document.getElementById('reset-err');
+      const succBox = document.getElementById('reset-succ');
+
+      if (newPwd.length < 3) {
+        errBox.innerText = "Password must be at least 3 characters long.";
+        errBox.style.display = 'block'; return;
+      }
+
+      if (newPwd !== confirmPwd) {
+        errBox.innerText = "Passwords do not match.";
+        errBox.style.display = 'block'; return;
+      }
+
+      const config = getDeviceConfig();
+      config.currentPassword = newPwd;
+      saveDeviceConfig(config);
+
+      succBox.innerText = "Password reset completed!";
+      succBox.style.display = 'block';
+
+      setTimeout(() => {
+        document.getElementById('reset-modal').classList.remove('active');
+        showDashboard(config.username);
+      }, 1000);
+    }
   </script>
 </body>
 </html>
