@@ -30,7 +30,6 @@
       padding: 20px 0;
     }
 
-    /* Ambient Lighting Background Glows */
     .bg-glow-1 {
       position: fixed;
       width: 500px;
@@ -55,7 +54,6 @@
       pointer-events: none;
     }
 
-    /* Auth Card Container */
     .portal-card {
       position: relative;
       z-index: 10;
@@ -108,7 +106,6 @@
       font-weight: 500;
     }
 
-    /* Form Styles */
     .form-group {
       margin-bottom: 20px;
     }
@@ -174,10 +171,6 @@
       text-decoration: none;
     }
 
-    .forgot-link:hover {
-      text-decoration: underline;
-    }
-
     .btn-submit {
       width: 100%;
       padding: 16px;
@@ -195,9 +188,19 @@
       transition: all 0.25s ease;
     }
 
-    .btn-submit:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 30px rgba(2, 132, 199, 0.5);
+    .small-switch-text {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 0.82rem;
+      color: #9ca3af;
+    }
+
+    .small-switch-text span {
+      color: #38bdf8;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: underline;
+      margin-left: 5px;
     }
 
     .alert-box {
@@ -222,7 +225,6 @@
       color: #4ade80;
     }
 
-    /* DASHBOARD PAGE STYLES */
     .dashboard-view {
       display: none;
       width: 100%;
@@ -254,7 +256,6 @@
       cursor: pointer;
     }
 
-    /* Yearly Definition Box */
     .definition-box {
       background: rgba(15, 23, 42, 0.6);
       border: 1px solid rgba(56, 189, 248, 0.25);
@@ -268,9 +269,6 @@
       font-size: 1.05rem;
       color: #38bdf8;
       margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
     .definition-box p {
@@ -279,7 +277,6 @@
       line-height: 1.6;
     }
 
-    /* Cards Grid */
     .cards-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -292,12 +289,6 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 18px;
       padding: 18px;
-      transition: all 0.25s ease;
-    }
-
-    .plan-card-item:hover {
-      border-color: rgba(56, 189, 248, 0.4);
-      background: rgba(255, 255, 255, 0.05);
     }
 
     .card-badge {
@@ -309,7 +300,6 @@
       padding: 3px 10px;
       border-radius: 20px;
       margin-bottom: 8px;
-      text-transform: uppercase;
     }
 
     .plan-card-item h4 {
@@ -325,55 +315,6 @@
       line-height: 1.4;
     }
 
-    /* Secure Protected Keys Section */
-    .secure-section {
-      margin-top: 30px;
-      padding-top: 20px;
-      border-top: 1px dashed rgba(255, 255, 255, 0.15);
-    }
-
-    .secure-section-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.95rem;
-      color: #e2e8f0;
-      margin-bottom: 15px;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .secure-btn-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .secure-key-btn {
-      width: 100%;
-      padding: 15px;
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
-      border: 1px solid rgba(234, 179, 8, 0.35);
-      border-radius: 14px;
-      color: #fef08a;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.92rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: all 0.25s ease;
-    }
-
-    .secure-key-btn:hover {
-      border-color: rgba(234, 179, 8, 0.8);
-      background: rgba(234, 179, 8, 0.1);
-      transform: translateY(-2px);
-    }
-
-    /* Modal Overlay */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0;
@@ -403,7 +344,6 @@
       border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 28px;
       padding: 35px 28px;
-      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.85);
     }
 
     .modal-title {
@@ -430,16 +370,8 @@
       cursor: pointer;
     }
 
-    .secret-content-box {
-      background: rgba(3, 7, 18, 0.7);
-      border: 1px solid rgba(34, 197, 94, 0.3);
-      border-radius: 14px;
-      padding: 16px;
-      margin-top: 15px;
-      color: #86efac;
-      font-size: 0.88rem;
-      line-height: 1.5;
-      display: none;
+    .hidden-view {
+      display: none !important;
     }
   </style>
 </head>
@@ -450,39 +382,76 @@
 
   <div class="portal-card" id="main-container">
     
-    <!-- LOGIN / AUTH VIEW -->
-    <div id="auth-view">
+    <!-- LOG IN VIEW -->
+    <div id="login-view">
       <div class="plan-header">
         <span class="plan-year-badge">⚡ 2019 STRATEGIC PLAN</span>
         <h1 class="portal-title">PERSONAL PLAN PORTAL</h1>
         <p class="portal-subtitle">Goal Execution & Management System</p>
       </div>
 
-      <div id="auth-alert" class="alert-box alert-error">Username or password is not correct.</div>
+      <div id="login-alert" class="alert-box alert-error">Invalid username or password.</div>
 
-      <form id="auth-form" onsubmit="handleAuthSubmit(event)">
-        <div class="form-group">
-          <label>Username</label>
-          <div class="input-wrapper">
-            <input type="text" id="username" class="form-input" placeholder="Enter username" required autocomplete="off" />
-            <span class="toggle-badge" id="badge-username" onclick="togglePassword('username', 'badge-username')">SHOW</span>
-          </div>
+      <div class="form-group">
+        <label>Username</label>
+        <div class="input-wrapper">
+          <input type="text" id="login-username" class="form-input" placeholder="Enter your username" autocomplete="off" />
         </div>
+      </div>
 
-        <div class="form-group">
-          <label>Password</label>
-          <div class="input-wrapper">
-            <input type="password" id="password" class="form-input" placeholder="Enter password" required />
-            <span class="toggle-badge" id="badge-password" onclick="togglePassword('password', 'badge-password')">SHOW</span>
-          </div>
-          <a class="forgot-link" onclick="openForgotModal()">Forgot Password?</a>
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-wrapper">
+          <input type="password" id="login-password" class="form-input" placeholder="Enter password" />
+          <span class="toggle-badge" id="badge-login-pass" onclick="togglePassword('login-password', 'badge-login-pass')">SHOW</span>
         </div>
+        <a class="forgot-link" onclick="openForgotModal()">Forgot Password?</a>
+      </div>
 
-        <button type="submit" id="main-submit-btn" class="btn-submit">SIGN IN</button>
-      </form>
+      <button type="button" onclick="handleLogin()" class="btn-submit">LOG IN</button>
+      
+      <p class="small-switch-text">Need a new account? <span onclick="switchToSignUp()">Sign Up</span></p>
     </div>
 
-    <!-- MAIN DASHBOARD PAGE (AFTER LOGIN SUCCESS) -->
+    <!-- SIGN UP VIEW -->
+    <div id="signup-view" class="hidden-view">
+      <div class="plan-header">
+        <span class="plan-year-badge">⚡ 2019 STRATEGIC PLAN</span>
+        <h1 class="portal-title">CREATE ACCOUNT</h1>
+        <p class="portal-subtitle">First Time Device Registration</p>
+      </div>
+
+      <div id="signup-alert" class="alert-box alert-error"></div>
+
+      <div class="form-group">
+        <label>Create Username</label>
+        <div class="input-wrapper">
+          <input type="text" id="signup-username" class="form-input" placeholder="Choose username" autocomplete="off" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Create Password</label>
+        <div class="input-wrapper">
+          <input type="password" id="signup-password" class="form-input" placeholder="Choose password" />
+          <span class="toggle-badge" id="badge-signup-pass" onclick="togglePassword('signup-password', 'badge-signup-pass')">SHOW</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Security Key (Master Code)</label>
+        <div class="input-wrapper">
+          <input type="password" id="signup-master-key" class="form-input" placeholder="Enter 777" />
+          <span class="toggle-badge" id="badge-signup-key" onclick="togglePassword('signup-master-key', 'badge-signup-key')">SHOW</span>
+        </div>
+      </div>
+
+      <button type="button" onclick="handleSignUp()" class="btn-submit">SIGN UP</button>
+
+      <p class="small-switch-text">Already registered? <span onclick="switchToLogin()">Log In</span></p>
+    </div>
+
+    <!-- DASHBOARD VIEW -->
     <div id="dashboard-view" class="dashboard-view">
       <div class="dash-header">
         <div>
@@ -492,15 +461,13 @@
         <button class="logout-btn" onclick="handleLogout()">LOGOUT</button>
       </div>
 
-      <!-- 1. YEARLY PLAN DEFINITION TEXT -->
       <div class="definition-box">
         <h3>📌 2019 Strategic Roadmap & Definition</h3>
         <p>
-          The 2019 Strategic Plan is designed as a foundational blueprint focused on personal mastery, high-performance skill acquisition, advanced software engineering practices, and structured financial literacy. The primary objective is to execute daily actionable micro-goals that compound into major long-term milestones.
+          The 2019 Strategic Plan is designed as a foundational blueprint focused on personal mastery, high-performance skill acquisition, advanced software engineering practices, and structured financial literacy.
         </p>
       </div>
 
-      <!-- 2. CORE PLAN CARDS GRID -->
       <div class="cards-grid">
         <div class="plan-card-item">
           <span class="card-badge">Module 01</span>
@@ -513,99 +480,9 @@
           <h4>💻 Software & Web Engineering</h4>
           <p>Developing high-performance Progressive Web Applications (PWA), clean UI architecture, and Spck mobile workflows.</p>
         </div>
-
-        <div class="plan-card-item">
-          <span class="card-badge">Module 03</span>
-          <h4>💪 Physical & Tactical Fitness</h4>
-          <p>Maintaining structured daily workouts, discipline routines, physical conditioning, and martial arts training.</p>
-        </div>
-      </div>
-
-      <!-- 3. TWO SECURE PROTECTED KEYS -->
-      <div class="secure-section">
-        <div class="secure-section-title">
-          🔒 Secure Protected Vaults (Passcode Required)
-        </div>
-
-        <div class="secure-btn-group">
-          <button class="secure-key-btn" onclick="openSecureModal(1)">
-            <span>🔑 Key 1: Private Personal Vault</span>
-            <span>PROTECTED 🔒</span>
-          </button>
-
-          <button class="secure-key-btn" onclick="openSecureModal(2)">
-            <span>🔑 Key 2: Financial & Forex Strategy</span>
-            <span>PROTECTED 🔒</span>
-          </button>
-        </div>
       </div>
     </div>
 
-  </div>
-
-  <!-- SECURE KEY LOCK MODAL -->
-  <div class="modal-overlay" id="secure-lock-modal">
-    <div class="modal-card">
-      <button class="close-btn" onclick="closeSecureModal()">✕</button>
-      <h2 class="modal-title" id="secure-modal-title">🔒 Protected Key Access</h2>
-      <p class="modal-desc" id="secure-modal-desc">Enter account password to unlock this secure plan vault.</p>
-
-      <div id="secure-err" class="alert-box alert-error"></div>
-
-      <form id="secure-lock-form" onsubmit="handleUnlockVault(event)">
-        <div class="form-group">
-          <label>Confirm Your Password</label>
-          <div class="input-wrapper">
-            <input type="password" id="vault-passcode" class="form-input" placeholder="Enter password" required />
-            <span class="toggle-badge" id="badge-vault" onclick="togglePassword('vault-passcode', 'badge-vault')">SHOW</span>
-          </div>
-        </div>
-        <button type="submit" class="btn-submit">UNLOCK VAULT</button>
-      </form>
-
-      <div id="secret-content" class="secret-content-box">
-        <!-- Dynamic Unlocked Content Inserted Here -->
-      </div>
-    </div>
-  </div>
-
-  <!-- FIRST TIME SETUP MODAL -->
-  <div class="modal-overlay" id="first-time-modal">
-    <div class="modal-card">
-      <h2 class="modal-title">🔐 First Time Setup</h2>
-      <p class="modal-desc">First time signing in on this device. Please update default password (777) to your secret password.</p>
-
-      <div id="setup-err" class="alert-box alert-error"></div>
-      <div id="setup-succ" class="alert-box alert-success"></div>
-
-      <form onsubmit="handleFirstTimeSetup(event)">
-        <div class="form-group">
-          <label>Current Password</label>
-          <div class="input-wrapper">
-            <input type="password" id="curr-pwd" class="form-input" placeholder="Enter 777" required />
-            <span class="toggle-badge" id="badge-curr" onclick="togglePassword('curr-pwd', 'badge-curr')">SHOW</span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>New Password</label>
-          <div class="input-wrapper">
-            <input type="password" id="new-pwd" class="form-input" placeholder="Enter new password" required />
-            <span class="toggle-badge" id="badge-new" onclick="togglePassword('new-pwd', 'badge-new')">SHOW</span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Confirm Password</label>
-          <div class="input-wrapper">
-            <input type="password" id="confirm-pwd" class="form-input" placeholder="Confirm new password" required />
-            <span class="toggle-badge" id="badge-conf" onclick="togglePassword('confirm-pwd', 'badge-conf')">SHOW</span>
-          </div>
-        </div>
-
-        <button type="submit" class="btn-submit">SAVE NEW PASSWORD</button>
-      </form>
-    </div>
   </div>
 
   <!-- SECURITY QUESTIONS SETUP MODAL -->
@@ -614,29 +491,27 @@
       <h2 class="modal-title">🛡️ Security Questions</h2>
       <p class="modal-desc">Setup recovery answers in case you forget your password in the future:</p>
 
-      <form onsubmit="handleSaveSecurityQuestions(event)">
-        <div class="form-group">
-          <label>1. Previous Password</label>
-          <input type="text" id="sec-prev-pwd" class="form-input" placeholder="e.g. 777" required />
-        </div>
+      <div class="form-group">
+        <label>1. Security Key Used</label>
+        <input type="text" id="sec-prev-pwd" class="form-input" placeholder="e.g. 777" />
+      </div>
 
-        <div class="form-group">
-          <label>2. Favorite Food</label>
-          <input type="text" id="sec-food" class="form-input" placeholder="e.g. Pizza" required />
-        </div>
+      <div class="form-group">
+        <label>2. Favorite Food</label>
+        <input type="text" id="sec-food" class="form-input" placeholder="e.g. Pizza" />
+      </div>
 
-        <div class="form-group">
-          <label>3. Favorite Color</label>
-          <input type="text" id="sec-color" class="form-input" placeholder="e.g. Blue" required />
-        </div>
+      <div class="form-group">
+        <label>3. Favorite Color</label>
+        <input type="text" id="sec-color" class="form-input" placeholder="e.g. Blue" />
+      </div>
 
-        <div class="form-group">
-          <label>4. Date of Birth</label>
-          <input type="text" id="sec-dob" class="form-input" placeholder="e.g. 15/08/2005" required />
-        </div>
+      <div class="form-group">
+        <label>4. Date of Birth</label>
+        <input type="text" id="sec-dob" class="form-input" placeholder="e.g. 15/08/2005" />
+      </div>
 
-        <button type="submit" class="btn-submit">COMPLETE SETUP</button>
-      </form>
+      <button type="button" onclick="handleSaveSecurityQuestions()" class="btn-submit">COMPLETE SETUP</button>
     </div>
   </div>
 
@@ -649,29 +524,27 @@
 
       <div id="forgot-err" class="alert-box alert-error"></div>
 
-      <form onsubmit="handleVerifyRecovery(event)">
-        <div class="form-group">
-          <label>Option A: Previous Password</label>
-          <input type="text" id="rec-prev-pwd" class="form-input" placeholder="Enter previous password" />
-        </div>
+      <div class="form-group">
+        <label>Option A: Security Key</label>
+        <input type="text" id="rec-prev-pwd" class="form-input" placeholder="Enter security key (777)" />
+      </div>
 
-        <div class="form-group">
-          <label>Option B: Favorite Food</label>
-          <input type="text" id="rec-food" class="form-input" placeholder="Enter favorite food" />
-        </div>
+      <div class="form-group">
+        <label>Option B: Favorite Food</label>
+        <input type="text" id="rec-food" class="form-input" placeholder="Enter favorite food" />
+      </div>
 
-        <div class="form-group">
-          <label>Option C: Favorite Color</label>
-          <input type="text" id="rec-color" class="form-input" placeholder="Enter favorite color" />
-        </div>
+      <div class="form-group">
+        <label>Option C: Favorite Color</label>
+        <input type="text" id="rec-color" class="form-input" placeholder="Enter favorite color" />
+      </div>
 
-        <div class="form-group">
-          <label>Option D: Date of Birth</label>
-          <input type="text" id="rec-dob" class="form-input" placeholder="Enter date of birth" />
-        </div>
+      <div class="form-group">
+        <label>Option D: Date of Birth</label>
+        <input type="text" id="rec-dob" class="form-input" placeholder="Enter date of birth" />
+      </div>
 
-        <button type="submit" class="btn-submit">VERIFY & RESET</button>
-      </form>
+      <button type="button" onclick="handleVerifyRecovery()" class="btn-submit">VERIFY & RESET</button>
     </div>
   </div>
 
@@ -684,43 +557,41 @@
       <div id="reset-err" class="alert-box alert-error"></div>
       <div id="reset-succ" class="alert-box alert-success"></div>
 
-      <form onsubmit="handleResetPassword(event)">
-        <div class="form-group">
-          <label>New Password</label>
-          <input type="password" id="reset-new-pwd" class="form-input" placeholder="Enter new password" required />
-        </div>
+      <div class="form-group">
+        <label>New Password</label>
+        <input type="password" id="reset-new-pwd" class="form-input" placeholder="Enter new password" />
+      </div>
 
-        <div class="form-group">
-          <label>Confirm Password</label>
-          <input type="password" id="reset-confirm-pwd" class="form-input" placeholder="Confirm new password" required />
-        </div>
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" id="reset-confirm-pwd" class="form-input" placeholder="Confirm new password" />
+      </div>
 
-        <button type="submit" class="btn-submit">RESET PASSWORD</button>
-      </form>
+      <button type="button" onclick="handleResetPassword()" class="btn-submit">RESET PASSWORD</button>
     </div>
   </div>
 
   <script>
-    const DEFAULT_USER = "eyael";
-    const DEFAULT_PASS = "777";
+    const MASTER_KEY = "777";
+    let currentSessionUser = null;
 
-    function getDeviceConfig() {
-      const saved = localStorage.getItem('plan_2019_portal_config');
-      if (!saved) {
-        const initialConfig = {
-          username: DEFAULT_USER,
-          currentPassword: DEFAULT_PASS,
-          isConfigured: false,
-          securityQuestions: null
-        };
-        localStorage.setItem('plan_2019_portal_config', JSON.stringify(initialConfig));
-        return initialConfig;
+    // PAGE LOAD CHECK
+    document.addEventListener("DOMContentLoaded", () => {
+      const isDeviceRegistered = localStorage.getItem('deviceRegistered');
+      if (isDeviceRegistered === 'true') {
+        switchToLogin();
+      } else {
+        switchToSignUp();
       }
-      return JSON.parse(saved);
+    });
+
+    function getAccountsData() {
+      const saved = localStorage.getItem('plan_2019_accounts');
+      return saved ? JSON.parse(saved) : {};
     }
 
-    function saveDeviceConfig(config) {
-      localStorage.setItem('plan_2019_portal_config', JSON.stringify(config));
+    function saveAccountsData(accounts) {
+      localStorage.setItem('plan_2019_accounts', JSON.stringify(accounts));
     }
 
     function togglePassword(inputId, badgeId) {
@@ -735,179 +606,123 @@
       }
     }
 
-    window.onload = function() {
-      const config = getDeviceConfig();
-      const mainBtn = document.getElementById('main-submit-btn');
-      if (!config.isConfigured) {
-        mainBtn.innerText = "SIGN IN";
-      } else {
-        mainBtn.innerText = "LOGIN";
+    function switchToLogin() {
+      document.getElementById('signup-view').classList.add('hidden-view');
+      document.getElementById('login-view').classList.remove('hidden-view');
+      document.getElementById('login-alert').style.display = 'none';
+    }
+
+    function switchToSignUp() {
+      document.getElementById('login-view').classList.add('hidden-view');
+      document.getElementById('signup-view').classList.remove('hidden-view');
+      document.getElementById('signup-alert').style.display = 'none';
+    }
+
+    // HANDLE SIGN UP
+    function handleSignUp() {
+      const userVal = document.getElementById('signup-username').value.trim().toLowerCase();
+      const passVal = document.getElementById('signup-password').value.trim();
+      const keyVal = document.getElementById('signup-master-key').value.trim();
+      const alertBox = document.getElementById('signup-alert');
+
+      if (!userVal || !passVal || !keyVal) {
+        alertBox.innerText = "Please fill in all fields.";
+        alertBox.style.display = 'block';
+        return;
       }
-    };
 
-    let activeUser = "";
-    let selectedVaultKey = null;
+      if (keyVal !== MASTER_KEY) {
+        alertBox.innerText = "Invalid Security Key! Key must be 777.";
+        alertBox.style.display = 'block';
+        return;
+      }
 
-    function handleAuthSubmit(e) {
-      e.preventDefault();
-      const userVal = document.getElementById('username').value.trim();
-      const passVal = document.getElementById('password').value.trim();
-      const alertBox = document.getElementById('auth-alert');
+      const accounts = getAccountsData();
+      accounts[userVal] = {
+        password: passVal,
+        securityQuestions: null
+      };
 
-      const config = getDeviceConfig();
+      saveAccountsData(accounts);
+      localStorage.setItem('deviceRegistered', 'true');
+      currentSessionUser = userVal;
 
-      if (userVal.toLowerCase() !== config.username.toLowerCase() || passVal !== config.currentPassword) {
-        alertBox.innerText = "Username or password is not correct.";
+      alertBox.style.display = 'none';
+      document.getElementById('sec-questions-modal').classList.add('active');
+    }
+
+    // HANDLE LOG IN
+    function handleLogin() {
+      const userVal = document.getElementById('login-username').value.trim().toLowerCase();
+      const passVal = document.getElementById('login-password').value.trim();
+      const alertBox = document.getElementById('login-alert');
+
+      if (!userVal || !passVal) {
+        alertBox.innerText = "Please enter both Username and Password.";
+        alertBox.style.display = 'block';
+        return;
+      }
+
+      const accounts = getAccountsData();
+      const userAccount = accounts[userVal];
+
+      if (!userAccount || userAccount.password !== passVal) {
+        alertBox.innerText = "Invalid username or password.";
         alertBox.style.display = 'block';
         return;
       }
 
       alertBox.style.display = 'none';
-      activeUser = userVal;
-
-      if (!config.isConfigured) {
-        document.getElementById('first-time-modal').classList.add('active');
-      } else {
-        showDashboard(activeUser);
-      }
+      currentSessionUser = userVal;
+      showDashboard(currentSessionUser);
     }
 
     function showDashboard(username) {
-      document.getElementById('auth-view').style.display = 'none';
+      document.getElementById('login-view').classList.add('hidden-view');
+      document.getElementById('signup-view').classList.add('hidden-view');
       document.getElementById('dashboard-view').style.display = 'block';
-      document.getElementById('main-container').style.maxWidth = '600px'; // Expand width for dashboard
+      document.getElementById('main-container').style.maxWidth = '600px';
       document.getElementById('welcome-user-text').innerText = `WELCOME, ${username.toUpperCase()}!`;
     }
 
     function handleLogout() {
       document.getElementById('dashboard-view').style.display = 'none';
-      document.getElementById('auth-view').style.display = 'block';
       document.getElementById('main-container').style.maxWidth = '460px';
-      document.getElementById('password').value = '';
+      document.getElementById('login-username').value = '';
+      document.getElementById('login-password').value = '';
+      
+      // LOG OUT ሲደረግ ሁልጊዜ ወደ LOG IN ገጽ ይመለሳል
+      switchToLogin();
+      currentSessionUser = null;
     }
 
-    /* SECURE VAULT KEYS LOGIC */
-    function openSecureModal(keyNumber) {
-      selectedVaultKey = keyNumber;
-      document.getElementById('vault-passcode').value = '';
-      document.getElementById('secure-err').style.display = 'none';
-      document.getElementById('secret-content').style.display = 'none';
-      document.getElementById('secure-lock-form').style.display = 'block';
-
-      if (keyNumber === 1) {
-        document.getElementById('secure-modal-title').innerText = "🔒 Key 1: Private Personal Vault";
-        document.getElementById('secure-modal-desc').innerText = "Enter your passcode to unlock private goals & personal logs.";
-      } else {
-        document.getElementById('secure-modal-title').innerText = "🔒 Key 2: Financial & Forex Strategy";
-        document.getElementById('secure-modal-desc').innerText = "Enter your passcode to view currency strategies, pips & lot risk management.";
-      }
-
-      document.getElementById('secure-lock-modal').classList.add('active');
-    }
-
-    function closeSecureModal() {
-      document.getElementById('secure-lock-modal').classList.remove('active');
-    }
-
-    function handleUnlockVault(e) {
-      e.preventDefault();
-      const pass = document.getElementById('vault-passcode').value.trim();
-      const config = getDeviceConfig();
-      const errBox = document.getElementById('secure-err');
-
-      if (pass !== config.currentPassword) {
-        errBox.innerText = "Incorrect passcode. Access denied.";
-        errBox.style.display = 'block';
-        return;
-      }
-
-      errBox.style.display = 'none';
-      document.getElementById('secure-lock-form').style.display = 'none';
-      const contentBox = document.getElementById('secret-content');
-
-      if (selectedVaultKey === 1) {
-        contentBox.innerHTML = `
-          <strong>🔓 PRIVATE VAULT UNLOCKED:</strong><br>
-          • Personal mindset & habit trackers.<br>
-          • Daily self-reflection logs.<br>
-          • Long-term vision notes and private milestones.
-        `;
-      } else {
-        contentBox.innerHTML = `
-          <strong>🔓 FOREX & FINANCIAL VAULT UNLOCKED:</strong><br>
-          • MetaTrader Chart Analysis & Pip Targets.<br>
-          • Risk-to-Reward ratio setup (1:2 minimum).<br>
-          • Strict lot sizing & account growth rules.
-        `;
-      }
-      contentBox.style.display = 'block';
-    }
-
-    /* FIRST TIME & RECOVERY HANDLERS */
-    function handleFirstTimeSetup(e) {
-      e.preventDefault();
-      const currPwd = document.getElementById('curr-pwd').value.trim();
-      const newPwd = document.getElementById('new-pwd').value.trim();
-      const confirmPwd = document.getElementById('confirm-pwd').value.trim();
-
-      const errBox = document.getElementById('setup-err');
-      const succBox = document.getElementById('setup-succ');
-
-      const config = getDeviceConfig();
-      errBox.style.display = 'none'; succBox.style.display = 'none';
-
-      if (currPwd !== config.currentPassword) {
-        errBox.innerText = "Current password is not correct.";
-        errBox.style.display = 'block'; return;
-      }
-
-      if (newPwd.length < 3) {
-        errBox.innerText = "Password must be at least 3 characters long.";
-        errBox.style.display = 'block'; return;
-      }
-
-      if (newPwd !== confirmPwd) {
-        errBox.innerText = "Passwords do not match.";
-        errBox.style.display = 'block'; return;
-      }
-
-      config.currentPassword = newPwd;
-      saveDeviceConfig(config);
-
-      succBox.innerText = "Password saved successfully!";
-      succBox.style.display = 'block';
-
-      setTimeout(() => {
-        document.getElementById('first-time-modal').classList.remove('active');
-        document.getElementById('sec-questions-modal').classList.add('active');
-      }, 1000);
-    }
-
-    function handleSaveSecurityQuestions(e) {
-      e.preventDefault();
-      const config = getDeviceConfig();
-
-      config.securityQuestions = {
+    function handleSaveSecurityQuestions() {
+      const accounts = getAccountsData();
+      accounts[currentSessionUser].securityQuestions = {
         prevPassword: document.getElementById('sec-prev-pwd').value.trim().toLowerCase(),
         food: document.getElementById('sec-food').value.trim().toLowerCase(),
         color: document.getElementById('sec-color').value.trim().toLowerCase(),
         dob: document.getElementById('sec-dob').value.trim().toLowerCase()
       };
 
-      config.isConfigured = true;
-      saveDeviceConfig(config);
-
+      saveAccountsData(accounts);
       document.getElementById('sec-questions-modal').classList.remove('active');
-      document.getElementById('main-submit-btn').innerText = "LOGIN";
-      showDashboard(activeUser);
+      showDashboard(currentSessionUser);
     }
 
     function openForgotModal() {
-      const config = getDeviceConfig();
-      if (!config.securityQuestions) {
-        alert("Security questions are not configured yet on this device.");
+      const userVal = document.getElementById('login-username').value.trim().toLowerCase();
+      if (!userVal) {
+        alert("Please enter your Username first.");
         return;
       }
+
+      const accounts = getAccountsData();
+      if (!accounts[userVal] || !accounts[userVal].securityQuestions) {
+        alert("No security recovery setup found for this Username.");
+        return;
+      }
+
       document.getElementById('forgot-modal').classList.add('active');
     }
 
@@ -915,10 +730,10 @@
       document.getElementById('forgot-modal').classList.remove('active');
     }
 
-    function handleVerifyRecovery(e) {
-      e.preventDefault();
-      const config = getDeviceConfig();
-      const q = config.securityQuestions;
+    function handleVerifyRecovery() {
+      const userVal = document.getElementById('login-username').value.trim().toLowerCase();
+      const accounts = getAccountsData();
+      const q = accounts[userVal].securityQuestions;
       const errBox = document.getElementById('forgot-err');
 
       const prevPwd = document.getElementById('rec-prev-pwd').value.trim().toLowerCase();
@@ -938,23 +753,23 @@
 
       if (isMatch) {
         errBox.style.display = 'none';
+        currentSessionUser = userVal;
         closeForgotModal();
         document.getElementById('reset-modal').classList.add('active');
       } else {
-        errBox.innerText = "Verification failed. Answer does not match.";
+        errBox.innerText = "Verification failed. Incorrect answer.";
         errBox.style.display = 'block';
       }
     }
 
-    function handleResetPassword(e) {
-      e.preventDefault();
+    function handleResetPassword() {
       const newPwd = document.getElementById('reset-new-pwd').value.trim();
       const confirmPwd = document.getElementById('reset-confirm-pwd').value.trim();
       const errBox = document.getElementById('reset-err');
       const succBox = document.getElementById('reset-succ');
 
       if (newPwd.length < 3) {
-        errBox.innerText = "Password must be at least 3 characters long.";
+        errBox.innerText = "Password must be at least 3 characters.";
         errBox.style.display = 'block'; return;
       }
 
@@ -963,16 +778,16 @@
         errBox.style.display = 'block'; return;
       }
 
-      const config = getDeviceConfig();
-      config.currentPassword = newPwd;
-      saveDeviceConfig(config);
+      const accounts = getAccountsData();
+      accounts[currentSessionUser].password = newPwd;
+      saveAccountsData(accounts);
 
-      succBox.innerText = "Password reset completed!";
+      succBox.innerText = "Password reset successfully!";
       succBox.style.display = 'block';
 
       setTimeout(() => {
         document.getElementById('reset-modal').classList.remove('active');
-        showDashboard(config.username);
+        showDashboard(currentSessionUser);
       }, 1000);
     }
   </script>
