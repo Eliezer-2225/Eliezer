@@ -3,793 +3,941 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2019 STRATEGIC PLAN PORTAL</title>
+  <title>Welcome Page - Interactive Experience</title>
   
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Dancing+Script:wght@700&family=Great+Vibes&family=Monoton&family=Pacifico&family=Playfair+Display:ital,wght@1,800&family=Poppins:wght@400;600;800&family=Plus+Jakarta+Sans:wght@600;800&display=swap" rel="stylesheet">
 
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
     body {
       min-height: 100vh;
       width: 100vw;
-      background: #030712;
-      color: #f9fafb;
-      overflow-x: hidden;
-      position: relative;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 20px 0;
-    }
-
-    .bg-glow-1 {
-      position: fixed;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(14, 165, 233, 0.2) 0%, rgba(99, 102, 241, 0.1) 50%, transparent 70%);
-      top: 10%;
-      left: 10%;
-      filter: blur(90px);
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .bg-glow-2 {
-      position: fixed;
-      width: 450px;
-      height: 450px;
-      background: radial-gradient(circle, rgba(168, 85, 247, 0.18) 0%, rgba(236, 72, 153, 0.08) 50%, transparent 70%);
-      bottom: 10%;
-      right: 10%;
-      filter: blur(90px);
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .portal-card {
+      background: #000000;
+      font-family: 'Cinzel Decorative', cursive;
+      overflow: hidden;
       position: relative;
-      z-index: 10;
-      width: 92%;
-      max-width: 460px;
-      background: rgba(17, 24, 39, 0.85);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 30px;
-      padding: 42px 32px;
-      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.85);
-      transition: all 0.4s ease;
     }
 
-    .plan-header {
-      text-align: center;
-      margin-bottom: 28px;
-    }
-
-    .plan-year-badge {
-      display: inline-block;
-      padding: 6px 16px;
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(99, 102, 241, 0.2));
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      border-radius: 30px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: #38bdf8;
-      letter-spacing: 1.5px;
-      margin-bottom: 14px;
-      text-transform: uppercase;
-    }
-
-    .portal-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.65rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #38bdf8 0%, #a855f7 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: -0.5px;
-    }
-
-    .portal-subtitle {
-      font-size: 0.85rem;
-      color: #9ca3af;
-      margin-top: 6px;
-      font-weight: 500;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      display: block;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: #cbd5e1;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .input-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 15px 65px 15px 18px;
-      background: rgba(3, 7, 18, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 14px;
-      color: #fff;
-      font-size: 0.95rem;
-      outline: none;
-      transition: all 0.25s ease;
-    }
-
-    .form-input:focus {
-      border-color: #38bdf8;
-      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.18);
-      background: rgba(3, 7, 18, 0.9);
-    }
-
-    .toggle-badge {
-      position: absolute;
-      right: 12px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: #38bdf8;
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.25);
-      padding: 5px 9px;
-      border-radius: 6px;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .forgot-link {
-      display: block;
-      text-align: right;
-      font-size: 0.82rem;
-      color: #38bdf8;
-      margin-top: 6px;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    .btn-submit {
-      width: 100%;
-      padding: 16px;
-      margin-top: 15px;
-      background: linear-gradient(135deg, #0284c7 0%, #6366f1 100%);
-      border: none;
-      border-radius: 14px;
-      color: #ffffff;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      cursor: pointer;
-      box-shadow: 0 10px 25px rgba(2, 132, 199, 0.35);
-      transition: all 0.25s ease;
-    }
-
-    .small-switch-text {
-      margin-top: 18px;
-      text-align: center;
-      font-size: 0.82rem;
-      color: #9ca3af;
-    }
-
-    .small-switch-text span {
-      color: #38bdf8;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: underline;
-      margin-left: 5px;
-    }
-
-    .alert-box {
-      padding: 12px 16px;
-      border-radius: 12px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      margin-bottom: 18px;
-      display: none;
-      text-align: center;
-    }
-
-    .alert-error {
-      background: rgba(239, 68, 68, 0.12);
-      border: 1px solid rgba(239, 68, 68, 0.35);
-      color: #f87171;
-    }
-
-    .alert-success {
-      background: rgba(34, 197, 94, 0.12);
-      border: 1px solid rgba(34, 197, 94, 0.35);
-      color: #4ade80;
-    }
-
-    .dashboard-view {
-      display: none;
-      width: 100%;
-    }
-
-    .dash-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
-      padding-bottom: 15px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .dash-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.4rem;
-      color: #38bdf8;
-    }
-
-    .logout-btn {
-      padding: 6px 14px;
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      color: #f87171;
-      border-radius: 8px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .definition-box {
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid rgba(56, 189, 248, 0.25);
-      border-radius: 18px;
-      padding: 20px;
-      margin-bottom: 25px;
-    }
-
-    .definition-box h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.05rem;
-      color: #38bdf8;
-      margin-bottom: 8px;
-    }
-
-    .definition-box p {
-      font-size: 0.88rem;
-      color: #cbd5e1;
-      line-height: 1.6;
-    }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-      margin-bottom: 28px;
-    }
-
-    .plan-card-item {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 18px;
-      padding: 18px;
-    }
-
-    .card-badge {
-      display: inline-block;
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: #818cf8;
-      background: rgba(129, 140, 248, 0.12);
-      padding: 3px 10px;
-      border-radius: 20px;
-      margin-bottom: 8px;
-    }
-
-    .plan-card-item h4 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.05rem;
-      color: #f3f4f6;
-      margin-bottom: 6px;
-    }
-
-    .plan-card-item p {
-      font-size: 0.82rem;
-      color: #9ca3af;
-      line-height: 1.4;
-    }
-
-    .modal-overlay {
+    /* 0. SECURITY GATE CARD */
+    #security-gate {
       position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(3, 7, 18, 0.92);
-      backdrop-filter: blur(18px);
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #0d1117;
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 1000;
+      transition: opacity 0.6s ease;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .login-card-gate {
+      width: 90%;
+      max-width: 380px;
+      padding: 30px 25px;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+    }
+
+    .gate-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #38bdf8;
+      margin-bottom: 20px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .field-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .field-group label {
+      font-size: 0.85rem;
+      color: #8b949e;
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .gate-input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #30363d;
+      background: #0d1117;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: border-color 0.2s;
+    }
+
+    .gate-input:focus {
+      border-color: #38bdf8;
+    }
+
+    .gate-btn {
+      width: 100%;
+      padding: 12px;
+      background: #0284c7;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .gate-error {
+      color: #f85149;
+      font-size: 0.85rem;
+      margin-top: 12px;
+      display: none;
+      font-weight: 600;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* 1. Main Card Layout */
+    .welcome-card {
+      position: relative;
+      background: linear-gradient(145deg, #0a192f, #020c1b);
+      padding: 40px 20px;
+      border-radius: 28px;
+      border: 1px solid rgba(0, 180, 216, 0.4);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95), 0 0 40px rgba(0, 180, 216, 0.3);
+      text-align: center;
+      max-width: 90%;
+      width: 480px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .welcome-card.no-card {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .welcome-main-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      transition: all 1.2s ease;
+    }
+
+    .welcome-char {
+      display: inline-block;
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: #90e0ef;
+      text-transform: uppercase;
+      text-shadow: 0 0 15px #00b4d8, 0 0 35px #0077b6;
+      letter-spacing: 2px;
+      transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .welcome-sub {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #48cae4;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 5px;
+      text-shadow: 0 0 10px rgba(0, 180, 216, 0.5);
+      transition: opacity 1s ease;
+    }
+
+    .emoji-img {
+      width: 75px;
+      height: 75px;
+      margin: 15px 0;
+      filter: drop-shadow(0 0 12px rgba(255, 204, 0, 0.6));
+      transition: opacity 1s ease;
+    }
+
+    /* 2. Floating Text */
+    #eyael-container {
+      position: absolute;
+      z-index: 20;
+      white-space: nowrap;
+      transition: opacity 0.5s ease;
+    }
+
+    .eyael-text {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: #ffcc00;
+      text-shadow: 0 0 12px rgba(255, 204, 0, 0.9);
+      transition: font-family 0.3s, color 0.3s, transform 0.1s linear;
+      display: inline-block;
+    }
+
+    /* 3. Blue Heart Emoji */
+    #heart-container {
+      position: absolute;
+      z-index: 25;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+    }
+
+    .blue-heart-img {
+      width: 42px;
+      height: 42px;
+      filter: drop-shadow(0 0 15px rgba(0, 119, 182, 0.9));
+      transition: transform 0.1s linear;
+    }
+
+    /* 4. Universe Background */
+    #universe-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+      transition: opacity 1s ease;
+    }
+
+    .star-eyael {
+      position: absolute;
+      white-space: nowrap;
+      opacity: 0;
+      animation: universeFade 3s ease-in-out infinite;
+    }
+
+    @keyframes universeFade {
+      0% { opacity: 0; transform: translateY(10px) scale(0.6); }
+      50% { opacity: 0.9; transform: translateY(-15px) scale(1.1); }
+      100% { opacity: 0; transform: translateY(-30px) scale(0.7); }
+    }
+
+    /* 5. CLICK ME BUTTON CARD */
+    #click-me-card {
+      position: absolute;
+      bottom: -150px;
+      opacity: 0;
+      z-index: 30;
+      background: linear-gradient(135deg, #00b4d8, #0077b6);
+      padding: 8px 22px;
+      border-radius: 30px;
+      box-shadow: 0 0 15px rgba(0, 180, 216, 0.6);
+      border: 1px solid #90e0ef;
+      cursor: pointer;
+      transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    #click-me-card:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 25px rgba(144, 224, 239, 0.9);
+    }
+
+    .click-me-text {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .sun-glow {
+      color: #fff7ad !important;
+      text-shadow: 0 0 20px #ffae00, 0 0 40px #ff7700, 0 0 80px #ff0000 !important;
+      font-family: 'Playfair Display', serif !important;
+    }
+
+    /* 6. COW PAGE MODAL CONTAINER */
+    #cow-page-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle, #0284c7 0%, #0369a1 40%, #0c4a6e 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.35s ease;
-    }
-
-    .modal-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .modal-card {
-      width: 90%;
-      max-width: 440px;
-      max-height: 90vh;
+      transition: opacity 0.8s ease-in-out;
       overflow-y: auto;
-      background: #0f172a;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 28px;
-      padding: 35px 28px;
+      padding: 20px;
     }
 
-    .modal-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: #38bdf8;
-      margin-bottom: 6px;
+    #cow-page-modal.active {
+      opacity: 1;
+      pointer-events: all;
     }
 
-    .modal-desc {
+    /* WAVE COLOR ANIMATION ACROSS SCREEN */
+    #cow-page-modal.animated-bg {
+      background: linear-gradient(-45deg, #ff0055, #7a00ff, #00d4ff, #00ff88, #ffb700, #ff0055) !important;
+      background-size: 400% 400% !important;
+      animation: waveColorGradient 8s ease infinite !important;
+    }
+
+    @keyframes waveColorGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .cow-title-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      transition: opacity 0.5s ease;
+    }
+
+    .cow-title {
+      font-family: 'Poppins', sans-serif;
+      color: #e0f2fe;
+      font-size: 1.8rem;
+      font-weight: 800;
+      text-shadow: 0 0 15px #38bdf8;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .orig-hug-emoji {
+      width: 40px;
+      height: 40px;
+      filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.8));
+    }
+
+    .cow-card-wrapper {
+      position: relative;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border: 2px solid rgba(56, 189, 248, 0.4);
+      border-radius: 24px;
+      padding: 24px 20px;
+      box-shadow: 0 0 40px rgba(56, 189, 248, 0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 380px;
+      transition: all 0.5s ease;
+    }
+
+    .cow-card-wrapper.no-wrapper {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+    }
+
+    .blue-cow-gif {
+      width: 200px;
+      max-width: 70vw;
+      border-radius: 16px;
+      filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.8));
+      animation: bounceCow 2.5s infinite ease-in-out;
+      margin-bottom: 15px;
+      transition: opacity 0.5s ease;
+    }
+
+    @keyframes bounceCow {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(2deg); }
+    }
+
+    /* INPUT BOX CONTAINER */
+    .feeling-box-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+      transition: opacity 0.5s ease;
+    }
+
+    .feeling-label {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #e0f2fe;
       font-size: 0.85rem;
-      color: #9ca3af;
-      margin-bottom: 20px;
-      line-height: 1.5;
+      font-weight: 600;
+      text-align: left;
     }
 
-    .close-btn {
-      float: right;
-      background: none;
+    .feeling-textarea {
+      width: 100%;
+      height: 75px;
+      background: rgba(13, 17, 23, 0.7);
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      border-radius: 12px;
+      padding: 10px;
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      resize: none;
+    }
+
+    .feeling-textarea:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+    }
+
+    .send-feeling-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: white;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
       border: none;
-      color: #9ca3af;
-      font-size: 1.2rem;
+      border-radius: 10px;
       cursor: pointer;
+      box-shadow: 0 0 12px rgba(2, 132, 199, 0.6);
+      transition: transform 0.2s ease;
     }
 
-    .hidden-view {
-      display: none !important;
+    .send-feeling-btn:hover {
+      transform: scale(1.02);
+    }
+
+    /* UNIQUE FONT STYLE FOR 'I LOVE YOU SO MUCH' */
+    .special-love-font {
+      font-family: 'Dancing Script', 'Great Vibes', cursive !important;
+      font-size: 3.5rem !important;
+      font-weight: 700 !important;
+      color: #ffffff !important;
+      text-shadow: 0 0 15px #ff007f, 0 0 30px #ff00a0, 0 0 45px #9d00ff !important;
+      line-height: 1.2;
+      margin-top: 5px;
+    }
+
+    /* SUCCESS RESPONSE BANNER */
+    .success-msg-banner {
+      display: none;
+      width: 100%;
+      padding: 15px;
+      text-align: center;
+      animation: fadeInZoom 0.8s ease forwards;
+    }
+
+    .success-first-line {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #e0f2fe;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 5px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+
+    /* CLOSE / CARD BUTTON */
+    #close-card-btn {
+      display: none;
+      margin-top: 20px;
+      padding: 10px 24px;
+      background: linear-gradient(135deg, #ff007f, #7a00ff);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      color: #ffffff;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255, 0, 127, 0.7);
+      animation: fadeInZoom 0.8s ease forwards;
+      transition: all 0.3s ease;
+    }
+
+    #close-card-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 30px rgba(255, 0, 127, 1);
+    }
+
+    @keyframes fadeInZoom {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 600px) {
+      .welcome-char { font-size: 2.2rem; }
+      .welcome-sub { font-size: 1.3rem; }
+      .eyael-text { font-size: 2.7rem; }
+      .cow-title { font-size: 1.4rem; }
+      .orig-hug-emoji { width: 32px; height: 32px; }
+      .special-love-font { font-size: 2.6rem !important; }
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-glow-1"></div>
-  <div class="bg-glow-2"></div>
+  <!-- LOCAL AUDIO FILE ("ተወራረጃለሁ.m4a") -->
+  <audio id="background-mezmur" preload="auto">
+    <source src="ተወራረጃለሁ.m4a" type="audio/mp4">
+    <source src="ተወራረጃለሁ.m4a" type="audio/aac">
+    <source src="ተወራረጃለሁ.m4a" type="audio/mpeg">
+  </audio>
 
-  <div class="portal-card" id="main-container">
-    
-    <!-- LOG IN VIEW -->
-    <div id="login-view">
-      <div class="plan-header">
-        <span class="plan-year-badge">⚡ 2019 STRATEGIC PLAN</span>
-        <h1 class="portal-title">PERSONAL PLAN PORTAL</h1>
-        <p class="portal-subtitle">Goal Execution & Management System</p>
-      </div>
-
-      <div id="login-alert" class="alert-box alert-error">Invalid username or password.</div>
-
-      <div class="form-group">
-        <label>Username</label>
-        <div class="input-wrapper">
-          <input type="text" id="login-username" class="form-input" placeholder="Enter your username" autocomplete="off" />
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Password</label>
-        <div class="input-wrapper">
-          <input type="password" id="login-password" class="form-input" placeholder="Enter password" />
-          <span class="toggle-badge" id="badge-login-pass" onclick="togglePassword('login-password', 'badge-login-pass')">SHOW</span>
-        </div>
-        <a class="forgot-link" onclick="openForgotModal()">Forgot Password?</a>
-      </div>
-
-      <button type="button" onclick="handleLogin()" class="btn-submit">LOG IN</button>
+  <!-- STEP 0: Security Gate Overlay -->
+  <div id="security-gate">
+    <div class="login-card-gate">
+      <div class="gate-title">🔒 Private Portal</div>
       
-      <p class="small-switch-text">Need a new account? <span onclick="switchToSignUp()">Sign Up</span></p>
-    </div>
-
-    <!-- SIGN UP VIEW -->
-    <div id="signup-view" class="hidden-view">
-      <div class="plan-header">
-        <span class="plan-year-badge">⚡ 2019 STRATEGIC PLAN</span>
-        <h1 class="portal-title">CREATE ACCOUNT</h1>
-        <p class="portal-subtitle">First Time Device Registration</p>
+      <div class="field-group">
+        <label>Your Name</label>
+        <input type="text" id="gate-name" class="gate-input" placeholder="Enter name..." autocomplete="off" />
       </div>
 
-      <div id="signup-alert" class="alert-box alert-error"></div>
-
-      <div class="form-group">
-        <label>Create Username</label>
-        <div class="input-wrapper">
-          <input type="text" id="signup-username" class="form-input" placeholder="Choose username" autocomplete="off" />
-        </div>
+      <div class="field-group">
+        <label>Password (7 characters)</label>
+        <input type="password" id="gate-pass" class="gate-input" placeholder="Enter 7-character code..." />
       </div>
 
-      <div class="form-group">
-        <label>Create Password</label>
-        <div class="input-wrapper">
-          <input type="password" id="signup-password" class="form-input" placeholder="Choose password" />
-          <span class="toggle-badge" id="badge-signup-pass" onclick="togglePassword('signup-password', 'badge-signup-pass')">SHOW</span>
-        </div>
+      <button class="gate-btn" onclick="checkGateAccess()">Enter Page</button>
+      
+      <div class="gate-error" id="gate-error">
+        Access Denied! Your password is not correct. Please try again.
       </div>
-
-      <div class="form-group">
-        <label>Security Key (Master Code)</label>
-        <div class="input-wrapper">
-          <input type="password" id="signup-master-key" class="form-input" placeholder="Enter 777" />
-          <span class="toggle-badge" id="badge-signup-key" onclick="togglePassword('signup-master-key', 'badge-signup-key')">SHOW</span>
-        </div>
-      </div>
-
-      <button type="button" onclick="handleSignUp()" class="btn-submit">SIGN UP</button>
-
-      <p class="small-switch-text">Already registered? <span onclick="switchToLogin()">Log In</span></p>
-    </div>
-
-    <!-- DASHBOARD VIEW -->
-    <div id="dashboard-view" class="dashboard-view">
-      <div class="dash-header">
-        <div>
-          <span class="plan-year-badge" style="margin:0;">2019 PORTAL</span>
-          <h2 class="dash-title" id="welcome-user-text">WELCOME!</h2>
-        </div>
-        <button class="logout-btn" onclick="handleLogout()">LOGOUT</button>
-      </div>
-
-      <div class="definition-box">
-        <h3>📌 2019 Strategic Roadmap & Definition</h3>
-        <p>
-          The 2019 Strategic Plan is designed as a foundational blueprint focused on personal mastery, high-performance skill acquisition, advanced software engineering practices, and structured financial literacy.
-        </p>
-      </div>
-
-      <div class="cards-grid">
-        <div class="plan-card-item">
-          <span class="card-badge">Module 01</span>
-          <h4>🎓 Academic & Knowledge Growth</h4>
-          <p>Mastering core engineering, science fundamentals, logical SAT aptitude, and continuous study schedules.</p>
-        </div>
-
-        <div class="plan-card-item">
-          <span class="card-badge">Module 02</span>
-          <h4>💻 Software & Web Engineering</h4>
-          <p>Developing high-performance Progressive Web Applications (PWA), clean UI architecture, and Spck mobile workflows.</p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- SECURITY QUESTIONS SETUP MODAL -->
-  <div class="modal-overlay" id="sec-questions-modal">
-    <div class="modal-card">
-      <h2 class="modal-title">🛡️ Security Questions</h2>
-      <p class="modal-desc">Setup recovery answers in case you forget your password in the future:</p>
-
-      <div class="form-group">
-        <label>1. Security Key Used</label>
-        <input type="text" id="sec-prev-pwd" class="form-input" placeholder="e.g. 777" />
-      </div>
-
-      <div class="form-group">
-        <label>2. Favorite Food</label>
-        <input type="text" id="sec-food" class="form-input" placeholder="e.g. Pizza" />
-      </div>
-
-      <div class="form-group">
-        <label>3. Favorite Color</label>
-        <input type="text" id="sec-color" class="form-input" placeholder="e.g. Blue" />
-      </div>
-
-      <div class="form-group">
-        <label>4. Date of Birth</label>
-        <input type="text" id="sec-dob" class="form-input" placeholder="e.g. 15/08/2005" />
-      </div>
-
-      <button type="button" onclick="handleSaveSecurityQuestions()" class="btn-submit">COMPLETE SETUP</button>
     </div>
   </div>
 
-  <!-- FORGOT PASSWORD MODAL -->
-  <div class="modal-overlay" id="forgot-modal">
-    <div class="modal-card">
-      <button class="close-btn" onclick="closeForgotModal()">✕</button>
-      <h2 class="modal-title">🔑 Account Recovery</h2>
-      <p class="modal-desc">Answer at least one security question to verify ownership:</p>
-
-      <div id="forgot-err" class="alert-box alert-error"></div>
-
-      <div class="form-group">
-        <label>Option A: Security Key</label>
-        <input type="text" id="rec-prev-pwd" class="form-input" placeholder="Enter security key (777)" />
-      </div>
-
-      <div class="form-group">
-        <label>Option B: Favorite Food</label>
-        <input type="text" id="rec-food" class="form-input" placeholder="Enter favorite food" />
-      </div>
-
-      <div class="form-group">
-        <label>Option C: Favorite Color</label>
-        <input type="text" id="rec-color" class="form-input" placeholder="Enter favorite color" />
-      </div>
-
-      <div class="form-group">
-        <label>Option D: Date of Birth</label>
-        <input type="text" id="rec-dob" class="form-input" placeholder="Enter date of birth" />
-      </div>
-
-      <button type="button" onclick="handleVerifyRecovery()" class="btn-submit">VERIFY & RESET</button>
+  <!-- Main Card -->
+  <div class="welcome-card" id="main-card">
+    <div class="welcome-main-container" id="welcome-text-box">
+      <span class="welcome-char">W</span>
+      <span class="welcome-char">E</span>
+      <span class="welcome-char">L</span>
+      <span class="welcome-char">C</span>
+      <span class="welcome-char">O</span>
+      <span class="welcome-char">M</span>
+      <span class="welcome-char">E</span>
     </div>
+
+    <h2 class="welcome-sub" id="w-sub">TO THIS PAGE</h2>
+    
+    <img src="https://em-content.zobj.net/source/apple/354/hugging-face_1f917.png" alt="Hugging Emoji" class="emoji-img" id="main-emoji" />
+    
+    <div id="eyael-base-box" style="height: 60px; width: 100%;"></div>
   </div>
 
-  <!-- RESET PASSWORD MODAL -->
-  <div class="modal-overlay" id="reset-modal">
-    <div class="modal-card">
-      <h2 class="modal-title">✨ Create New Password</h2>
-      <p class="modal-desc">Verification successful. Please enter your new password:</p>
+  <!-- Floating Text -->
+  <div id="eyael-container">
+    <span class="eyael-text" id="eyael-txt"></span>
+  </div>
 
-      <div id="reset-err" class="alert-box alert-error"></div>
-      <div id="reset-succ" class="alert-box alert-success"></div>
+  <!-- Chasing & Giant Heart 💙 -->
+  <div id="heart-container">
+    <img src="https://em-content.zobj.net/source/apple/354/blue-heart_1f499.png" alt="Blue Heart" class="blue-heart-img" id="heart-img" />
+  </div>
 
-      <div class="form-group">
-        <label>New Password</label>
-        <input type="password" id="reset-new-pwd" class="form-input" placeholder="Enter new password" />
-      </div>
+  <!-- Universe Background -->
+  <div id="universe-container"></div>
 
-      <div class="form-group">
-        <label>Confirm Password</label>
-        <input type="password" id="reset-confirm-pwd" class="form-input" placeholder="Confirm new password" />
-      </div>
+  <!-- CLICK ME BUTTON CARD -->
+  <div id="click-me-card" onclick="goToNextPage()">
+    <span class="click-me-text">Click Me ✨</span>
+  </div>
 
-      <button type="button" onclick="handleResetPassword()" class="btn-submit">RESET PASSWORD</button>
+  <!-- COW PAGE MODAL INTERFACE -->
+  <div id="cow-page-modal">
+    <div class="cow-title-container" id="cow-title-box">
+      <div class="cow-title">COME HERE</div>
+      <img src="https://em-content.zobj.net/source/apple/354/hugging-face_1f917.png" alt="Hugging Emoji" class="orig-hug-emoji" />
     </div>
+
+    <div class="cow-card-wrapper" id="cow-card">
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExc2J0ZjcxN2dqZjdzcm05aHhhcGU2OHllYmd6ZXAydXVuaGNxNDRuaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9IbxxvDUQM/giphy.gif" alt="Cute Animated Cow" class="blue-cow-gif" id="cow-gif" />
+      
+      <!-- Type Your Feeling Form -->
+      <div class="feeling-box-container" id="feeling-form-box">
+        <div class="feeling-label">Type your feeling:</div>
+        <textarea id="user-feeling" class="feeling-textarea" placeholder="Write what you feel here..."></textarea>
+        <button class="send-feeling-btn" onclick="sendFeelingData()">SEND 💌</button>
+      </div>
+
+      <!-- Success Banner with Custom Script Font -->
+      <div class="success-msg-banner" id="success-banner">
+        <div class="success-first-line">sent successfully</div>
+        <div class="special-love-font">I LOVE YOU SO MUCH🥰</div>
+      </div>
+    </div>
+
+    <!-- CLOSE / CARD BUTTON -->
+    <button id="close-card-btn" onclick="transformLettersAndReturn()">CLOSE ✨</button>
+  </div>
+
+  <!-- LETTER ANIMATION OVERLAY -->
+  <div id="letter-anim-overlay" style="position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; z-index:2500; display:none; justify-content:center; align-items:center;">
+    <div id="flying-letters-box" style="position:relative; width:100%; height:100%; display:flex; justify-content:center; align-items:center;"></div>
   </div>
 
   <script>
-    const MASTER_KEY = "777";
-    let currentSessionUser = null;
+    const securityGate = document.getElementById('security-gate');
+    const gateName = document.getElementById('gate-name');
+    const gatePass = document.getElementById('gate-pass');
+    const gateError = document.getElementById('gate-error');
 
-    // PAGE LOAD CHECK
-    document.addEventListener("DOMContentLoaded", () => {
-      const isDeviceRegistered = localStorage.getItem('deviceRegistered');
-      if (isDeviceRegistered === 'true') {
-        switchToLogin();
+    const eyaelBox = document.getElementById('eyael-container');
+    const eyaelTxt = document.getElementById('eyael-txt');
+    const heartBox = document.getElementById('heart-container');
+    const heartImg = document.getElementById('heart-img');
+    const mainCard = document.getElementById('main-card');
+    const wSub = document.getElementById('w-sub');
+    const mainEmoji = document.getElementById('main-emoji');
+    const universe = document.getElementById('universe-container');
+    const welcomeChars = document.querySelectorAll('.welcome-char');
+    const clickMeBtn = document.getElementById('click-me-card');
+    
+    /* COW MODAL ELEMENTS */
+    const cowModal = document.getElementById('cow-page-modal');
+    const cowCardWrapper = document.getElementById('cow-card');
+    const cowTitleBox = document.getElementById('cow-title-box');
+    const cowGif = document.getElementById('cow-gif');
+    const feelingFormBox = document.getElementById('feeling-form-box');
+    const userFeelingInput = document.getElementById('user-feeling');
+    const successBanner = document.getElementById('success-banner');
+    const closeCardBtn = document.getElementById('close-card-btn');
+    const backgroundMezmur = document.getElementById('background-mezmur');
+
+    const letterAnimOverlay = document.getElementById('letter-anim-overlay');
+    const flyingLettersBox = document.getElementById('flying-letters-box');
+
+    const fonts = ['Great Vibes', 'Pacifico', 'Monoton', 'Cinzel Decorative', 'Playfair Display', 'Dancing Script'];
+    const colors = ['#ffcc00', '#90e0ef', '#ff4d6d', '#70e000', '#e0aaff', '#00f5d4', '#ff9e00', '#ff007f', '#00d4ff'];
+
+    let activeDisplayName = "Eyael";
+    let ex = window.innerWidth / 2 - 60;
+    let ey = window.innerHeight / 2 + 120;
+    let hx = ex + 130;
+    let hy = ey;
+
+    let evx = 4, evy = 3;
+    let scaleEyael = 1.0;
+    let isEyaelRunning = false;
+    let isHeartChasing = false;
+    let isGiantCovering = false;
+    let heartScale = 1.0;
+
+    function checkGateAccess() {
+      const name = gateName.value.trim();
+      const pass = gatePass.value.trim();
+
+      if (pass.length === 7 && name.length > 0) {
+        gateError.style.display = 'none';
+        
+        activeDisplayName = name;
+        eyaelTxt.innerText = activeDisplayName;
+
+        localStorage.setItem('currentUser', name);
+
+        securityGate.style.opacity = '0';
+        setTimeout(() => {
+          securityGate.style.display = 'none';
+          initMainExperience();
+        }, 600);
+
       } else {
-        switchToSignUp();
-      }
-    });
-
-    function getAccountsData() {
-      const saved = localStorage.getItem('plan_2019_accounts');
-      return saved ? JSON.parse(saved) : {};
-    }
-
-    function saveAccountsData(accounts) {
-      localStorage.setItem('plan_2019_accounts', JSON.stringify(accounts));
-    }
-
-    function togglePassword(inputId, badgeId) {
-      const input = document.getElementById(inputId);
-      const badge = document.getElementById(badgeId);
-      if (input.type === "password") {
-        input.type = "text";
-        badge.innerText = "HIDE";
-      } else {
-        input.type = "password";
-        badge.innerText = "SHOW";
+        gateError.style.display = 'block';
       }
     }
 
-    function switchToLogin() {
-      document.getElementById('signup-view').classList.add('hidden-view');
-      document.getElementById('login-view').classList.remove('hidden-view');
-      document.getElementById('login-alert').style.display = 'none';
-    }
-
-    function switchToSignUp() {
-      document.getElementById('login-view').classList.add('hidden-view');
-      document.getElementById('signup-view').classList.remove('hidden-view');
-      document.getElementById('signup-alert').style.display = 'none';
-    }
-
-    // HANDLE SIGN UP
-    function handleSignUp() {
-      const userVal = document.getElementById('signup-username').value.trim().toLowerCase();
-      const passVal = document.getElementById('signup-password').value.trim();
-      const keyVal = document.getElementById('signup-master-key').value.trim();
-      const alertBox = document.getElementById('signup-alert');
-
-      if (!userVal || !passVal || !keyVal) {
-        alertBox.innerText = "Please fill in all fields.";
-        alertBox.style.display = 'block';
-        return;
-      }
-
-      if (keyVal !== MASTER_KEY) {
-        alertBox.innerText = "Invalid Security Key! Key must be 777.";
-        alertBox.style.display = 'block';
-        return;
-      }
-
-      const accounts = getAccountsData();
-      accounts[userVal] = {
-        password: passVal,
-        securityQuestions: null
-      };
-
-      saveAccountsData(accounts);
-      localStorage.setItem('deviceRegistered', 'true');
-      currentSessionUser = userVal;
-
-      alertBox.style.display = 'none';
-      document.getElementById('sec-questions-modal').classList.add('active');
-    }
-
-    // HANDLE LOG IN
-    function handleLogin() {
-      const userVal = document.getElementById('login-username').value.trim().toLowerCase();
-      const passVal = document.getElementById('login-password').value.trim();
-      const alertBox = document.getElementById('login-alert');
-
-      if (!userVal || !passVal) {
-        alertBox.innerText = "Please enter both Username and Password.";
-        alertBox.style.display = 'block';
-        return;
-      }
-
-      const accounts = getAccountsData();
-      const userAccount = accounts[userVal];
-
-      if (!userAccount || userAccount.password !== passVal) {
-        alertBox.innerText = "Invalid username or password.";
-        alertBox.style.display = 'block';
-        return;
-      }
-
-      alertBox.style.display = 'none';
-      currentSessionUser = userVal;
-      showDashboard(currentSessionUser);
-    }
-
-    function showDashboard(username) {
-      document.getElementById('login-view').classList.add('hidden-view');
-      document.getElementById('signup-view').classList.add('hidden-view');
-      document.getElementById('dashboard-view').style.display = 'block';
-      document.getElementById('main-container').style.maxWidth = '600px';
-      document.getElementById('welcome-user-text').innerText = `WELCOME, ${username.toUpperCase()}!`;
-    }
-
-    function handleLogout() {
-      document.getElementById('dashboard-view').style.display = 'none';
-      document.getElementById('main-container').style.maxWidth = '460px';
-      document.getElementById('login-username').value = '';
-      document.getElementById('login-password').value = '';
-      
-      // LOG OUT ሲደረግ ሁልጊዜ ወደ LOG IN ገጽ ይመለሳል
-      switchToLogin();
-      currentSessionUser = null;
-    }
-
-    function handleSaveSecurityQuestions() {
-      const accounts = getAccountsData();
-      accounts[currentSessionUser].securityQuestions = {
-        prevPassword: document.getElementById('sec-prev-pwd').value.trim().toLowerCase(),
-        food: document.getElementById('sec-food').value.trim().toLowerCase(),
-        color: document.getElementById('sec-color').value.trim().toLowerCase(),
-        dob: document.getElementById('sec-dob').value.trim().toLowerCase()
-      };
-
-      saveAccountsData(accounts);
-      document.getElementById('sec-questions-modal').classList.remove('active');
-      showDashboard(currentSessionUser);
-    }
-
-    function openForgotModal() {
-      const userVal = document.getElementById('login-username').value.trim().toLowerCase();
-      if (!userVal) {
-        alert("Please enter your Username first.");
-        return;
-      }
-
-      const accounts = getAccountsData();
-      if (!accounts[userVal] || !accounts[userVal].securityQuestions) {
-        alert("No security recovery setup found for this Username.");
-        return;
-      }
-
-      document.getElementById('forgot-modal').classList.add('active');
-    }
-
-    function closeForgotModal() {
-      document.getElementById('forgot-modal').classList.remove('active');
-    }
-
-    function handleVerifyRecovery() {
-      const userVal = document.getElementById('login-username').value.trim().toLowerCase();
-      const accounts = getAccountsData();
-      const q = accounts[userVal].securityQuestions;
-      const errBox = document.getElementById('forgot-err');
-
-      const prevPwd = document.getElementById('rec-prev-pwd').value.trim().toLowerCase();
-      const food = document.getElementById('rec-food').value.trim().toLowerCase();
-      const color = document.getElementById('rec-color').value.trim().toLowerCase();
-      const dob = document.getElementById('rec-dob').value.trim().toLowerCase();
-
-      if (!prevPwd && !food && !color && !dob) {
-        errBox.innerText = "Please answer at least one question.";
-        errBox.style.display = 'block'; return;
-      }
-
-      const isMatch = (prevPwd && prevPwd === q.prevPassword) ||
-                      (food && food === q.food) ||
-                      (color && color === q.color) ||
-                      (dob && dob === q.dob);
-
-      if (isMatch) {
-        errBox.style.display = 'none';
-        currentSessionUser = userVal;
-        closeForgotModal();
-        document.getElementById('reset-modal').classList.add('active');
-      } else {
-        errBox.innerText = "Verification failed. Incorrect answer.";
-        errBox.style.display = 'block';
-      }
-    }
-
-    function handleResetPassword() {
-      const newPwd = document.getElementById('reset-new-pwd').value.trim();
-      const confirmPwd = document.getElementById('reset-confirm-pwd').value.trim();
-      const errBox = document.getElementById('reset-err');
-      const succBox = document.getElementById('reset-succ');
-
-      if (newPwd.length < 3) {
-        errBox.innerText = "Password must be at least 3 characters.";
-        errBox.style.display = 'block'; return;
-      }
-
-      if (newPwd !== confirmPwd) {
-        errBox.innerText = "Passwords do not match.";
-        errBox.style.display = 'block'; return;
-      }
-
-      const accounts = getAccountsData();
-      accounts[currentSessionUser].password = newPwd;
-      saveAccountsData(accounts);
-
-      succBox.innerText = "Password reset successfully!";
-      succBox.style.display = 'block';
+    function initMainExperience() {
+      eyaelBox.style.left = ex + 'px';
+      eyaelBox.style.top = ey + 'px';
+      heartBox.style.left = hx + 'px';
+      heartBox.style.top = hy + 'px';
 
       setTimeout(() => {
-        document.getElementById('reset-modal').classList.remove('active');
-        showDashboard(currentSessionUser);
-      }, 1000);
+        isEyaelRunning = true;
+        requestAnimationFrame(gameLoop);
+      }, 4000);
+
+      setTimeout(() => {
+        isHeartChasing = true;
+        setInterval(spawnUniverseEyael, 180);
+      }, 6000);
+
+      setTimeout(() => {
+        isGiantCovering = true;
+      }, 9000);
+
+      setTimeout(() => {
+        isEyaelRunning = false;
+        isHeartChasing = false;
+        eyaelBox.style.opacity = '0';
+        heartBox.style.opacity = '0';
+      }, 12000);
+
+      setTimeout(() => {
+        universe.style.opacity = '0';
+        wSub.style.opacity = '0';
+        mainEmoji.style.opacity = '0';
+      }, 14000);
+
+      setTimeout(() => {
+        wSub.style.display = 'none';
+        mainEmoji.style.display = 'none';
+        mainCard.classList.add('no-card');
+
+        welcomeChars.forEach((char) => {
+          const rx = (Math.random() - 0.5) * 200;
+          const ry = (Math.random() - 0.5) * 200;
+          const rRot = (Math.random() - 0.5) * 360;
+          char.style.transform = `translate(${rx}px, ${ry}px) rotate(${rRot}deg)`;
+          char.classList.add('sun-glow');
+        });
+
+        setTimeout(() => {
+          welcomeChars.forEach((char) => {
+            char.style.transform = 'translate(0, 0) rotate(0deg) scale(1.2)';
+          });
+          
+          setTimeout(() => {
+            document.getElementById('welcome-text-box').style.transform = 'translateY(-100px)';
+            
+            setTimeout(() => {
+              clickMeBtn.style.bottom = '120px';
+              clickMeBtn.style.opacity = '1';
+            }, 600);
+
+          }, 1000);
+
+        }, 1200);
+
+      }, 16000);
+    }
+
+    function gameLoop() {
+      const sw = window.innerWidth;
+      const sh = window.innerHeight;
+
+      if (isEyaelRunning) {
+        ex += evx;
+        ey += evy;
+
+        if (ex + 120 >= sw || ex <= 10) evx = -evx;
+        if (ey + 60 >= sh || ey <= 10) evy = -evy;
+
+        scaleEyael = Math.max(0.4, scaleEyael - 0.0008);
+
+        if (Math.random() < 0.05) {
+          eyaelTxt.style.fontFamily = fonts[Math.floor(Math.random() * fonts.length)];
+          eyaelTxt.style.color = colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        eyaelBox.style.left = ex + 'px';
+        eyaelBox.style.top = ey + 'px';
+        eyaelBox.style.transform = `scale(${scaleEyael})`;
+      }
+
+      if (isHeartChasing) {
+        if (!isGiantCovering) {
+          hx += (ex - hx) * 0.08;
+          hy += (ey - hy) * 0.08;
+        } else {
+          hx += (ex - hx) * 0.2;
+          hy += (ey - hy) * 0.2;
+          heartScale += 0.25;
+        }
+
+        heartBox.style.left = hx + 'px';
+        heartBox.style.top = hy + 'px';
+        heartImg.style.transform = `scale(${heartScale})`;
+      }
+
+      if (isEyaelRunning || isHeartChasing) {
+        requestAnimationFrame(gameLoop);
+      }
+    }
+
+    function spawnUniverseEyael() {
+      if (universe.style.opacity === '0') return;
+      
+      const star = document.createElement('div');
+      star.className = 'star-eyael';
+      star.innerText = activeDisplayName;
+
+      const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      const randomSize = Math.floor(Math.random() * 24) + 16;
+      const rx = Math.random() * (window.innerWidth - 80);
+      const ry = Math.random() * (window.innerHeight - 50);
+
+      star.style.fontFamily = randomFont;
+      star.style.color = randomColor;
+      star.style.fontSize = randomSize + 'px';
+      star.style.left = rx + 'px';
+      star.style.top = ry + 'px';
+      star.style.textShadow = `0 0 12px ${randomColor}`;
+
+      universe.appendChild(star);
+      setTimeout(() => star.remove(), 3000);
+    }
+
+    function goToNextPage() {
+      cowModal.classList.add('active');
+    }
+
+    /* ACTION UPON CLICKING SEND 💌 */
+    function sendFeelingData() {
+      const text = userFeelingInput.value.trim();
+      if (!text) return;
+
+      // 1. Play Local Audio ("ተወራረጃለሁ.m4a") Directly on User Click
+      if (backgroundMezmur) {
+        backgroundMezmur.currentTime = 0;
+        const playPromise = backgroundMezmur.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(err => {
+            console.log("Audio playback error:", err);
+          });
+        }
+      }
+
+      // 2. Save data locally
+      const existingData = JSON.parse(localStorage.getItem('adminSentFeelings') || '[]');
+      const newEntry = {
+        senderName: activeDisplayName,
+        feelingText: text,
+        time: new Date().toLocaleString()
+      };
+      existingData.push(newEntry);
+      localStorage.setItem('adminSentFeelings', JSON.stringify(existingData));
+
+      // 3. Hide Cow GIF, Title, and Input Form
+      cowTitleBox.style.display = 'none';
+      cowGif.style.display = 'none';
+      feelingFormBox.style.display = 'none';
+
+      // 4. Show Beautiful Message Banner & Close Button
+      successBanner.style.display = 'block';
+      closeCardBtn.style.display = 'inline-block';
+
+      // 5. Start Multi-Color Gradient Wave Animation Across Entire Screen
+      cowModal.classList.add('animated-bg');
+    }
+
+    /* STEP: CLOSE BUTTON CLICKED -> LETTERS EXIT SCREEN, GATHER TO CENTER, FORM CARD, AND RETURN TO PORTAL */
+    function transformLettersAndReturn() {
+      successBanner.style.display = 'none';
+      closeCardBtn.style.display = 'none';
+      cowCardWrapper.style.display = 'none';
+      cowTitleBox.style.display = 'none';
+
+      letterAnimOverlay.style.display = 'flex';
+      flyingLettersBox.innerHTML = '';
+
+      const textPhrase = "I LOVE YOU SO MUCH";
+      const letters = textPhrase.split('');
+      const spanElements = [];
+
+      // 1. Create flying letters scattered around screen
+      letters.forEach((char, index) => {
+        const span = document.createElement('span');
+        span.innerText = char === ' ' ? '\u00A0' : char;
+        span.style.position = 'absolute';
+        span.style.fontFamily = fonts[Math.floor(Math.random() * fonts.length)];
+        span.style.color = colors[Math.floor(Math.random() * colors.length)];
+        span.style.fontSize = '2.5rem';
+        span.style.fontWeight = '800';
+        span.style.textShadow = '0 0 15px rgba(255,255,255,0.8)';
+        span.style.transition = 'all 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+
+        // Initial random scattered positions outside/edges of screen
+        const startX = (Math.random() - 0.5) * window.innerWidth * 1.5;
+        const startY = (Math.random() - 0.5) * window.innerHeight * 1.5;
+        span.style.transform = `translate(${startX}px, ${startY}px) scale(0.3) rotate(${Math.random() * 360}deg)`;
+        span.style.opacity = '0';
+
+        flyingLettersBox.appendChild(span);
+        spanElements.push({ element: span, index: index });
+      });
+
+      // 2. Animate letters to center to form the phrase/card
+      setTimeout(() => {
+        spanElements.forEach((item, i) => {
+          item.element.style.opacity = '1';
+          const offsetX = (i - spanElements.length / 2) * 22;
+          item.element.style.transform = `translate(${offsetX}px, 0px) scale(1.2) rotate(0deg)`;
+          item.element.style.fontFamily = 'Dancing Script, cursive';
+          item.element.style.color = '#ffffff';
+          item.element.style.textShadow = '0 0 20px #ff007f, 0 0 40px #7a00ff';
+        });
+      }, 100);
+
+      // 3. After holding in center, letters disperse/return back into their places and portal resets
+      setTimeout(() => {
+        spanElements.forEach((item) => {
+          const endX = (Math.random() - 0.5) * window.innerWidth * 1.8;
+          const endY = (Math.random() - 0.5) * window.innerHeight * 1.8;
+          item.element.style.transform = `translate(${endX}px, ${endY}px) scale(0.2) rotate(${Math.random() * 360}deg)`;
+          item.element.style.opacity = '0';
+        });
+
+        setTimeout(() => {
+          letterAnimOverlay.style.display = 'none';
+          returnToPortal();
+        }, 1200);
+
+      }, 2500);
+    }
+
+    /* RETURN TO MAIN SECURITY GATE PORTAL */
+    function returnToPortal() {
+      if (backgroundMezmur) {
+        backgroundMezmur.pause();
+        backgroundMezmur.currentTime = 0;
+      }
+
+      cowModal.classList.remove('active', 'animated-bg');
+      
+      // Reset modal contents for next time
+      cowTitleBox.style.display = 'flex';
+      cowGif.style.display = 'block';
+      feelingFormBox.style.display = 'flex';
+      cowCardWrapper.style.display = 'flex';
+      successBanner.style.display = 'none';
+      closeCardBtn.style.display = 'none';
+      cowCardWrapper.classList.remove('no-wrapper');
+      userFeelingInput.value = '';
+
+      // Show security gate again
+      securityGate.style.display = 'flex';
+      securityGate.style.opacity = '1';
+      gatePass.value = '';
     }
   </script>
+
 </body>
 </html>

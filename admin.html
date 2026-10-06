@@ -3,188 +3,196 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Control Center - Security Logs</title>
+  <title>Admin Dashboard - Sent Feelings</title>
+  
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
 
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
     body {
       min-height: 100vh;
-      background: #0f172a;
-      color: #f8fafc;
-      padding: 30px 20px;
+      width: 100vw;
+      background: #0d1117;
+      color: #e0f2fe;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding: 30px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .admin-container {
-      max-width: 900px;
-      margin: 0 auto;
+      width: 100%;
+      max-width: 600px;
     }
 
-    .header-bar {
+    .admin-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
       padding-bottom: 15px;
-      border-bottom: 1px solid #334155;
+      border-bottom: 1px solid #30363d;
     }
 
     .admin-title {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .clear-btn {
+      padding: 8px 16px;
+      background: #f85149;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .clear-btn:hover {
+      opacity: 0.85;
+    }
+
+    .feelings-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .feeling-card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .sender-name {
+      font-size: 1rem;
       font-weight: 800;
       color: #38bdf8;
     }
 
-    .btn-clear {
-      background: #ef4444;
-      color: #fff;
-      border: none;
-      padding: 10px 18px;
+    .send-time {
+      font-size: 0.75rem;
+      color: #8b949e;
+    }
+
+    .card-body {
+      background: #0d1117;
+      padding: 12px;
       border-radius: 8px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .btn-clear:hover { background: #dc2626; }
-
-    .stats-card {
-      background: #1e293b;
-      padding: 20px;
-      border-radius: 16px;
-      border: 1px solid #334155;
-      margin-bottom: 25px;
-      display: flex;
-      gap: 30px;
-    }
-
-    .stat-box h4 { font-size: 0.85rem; color: #94a3b8; text-transform: uppercase; }
-    .stat-box p { font-size: 1.8rem; font-weight: 800; color: #f8fafc; margin-top: 5px; }
-
-    .table-card {
-      background: #1e293b;
-      border-radius: 16px;
-      border: 1px solid #334155;
-      overflow: hidden;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-    }
-
-    th {
-      background: #0f172a;
-      padding: 16px;
-      font-size: 0.85rem;
-      color: #94a3b8;
-      text-transform: uppercase;
-    }
-
-    td {
-      padding: 16px;
-      border-bottom: 1px solid #334155;
+      border: 1px solid #21262d;
+      color: #f0f6fc;
       font-size: 0.95rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
     }
 
-    tr:last-child td { border-bottom: none; }
-
-    .badge-error {
-      background: rgba(239, 68, 68, 0.2);
-      color: #fca5a5;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      font-weight: 700;
-    }
-
-    .empty-state {
+    .no-data {
       text-align: center;
-      padding: 40px;
-      color: #94a3b8;
+      color: #8b949e;
+      font-size: 1rem;
+      margin-top: 40px;
+      padding: 30px;
+      background: #161b22;
+      border-radius: 14px;
+      border: 1px dashed #30363d;
     }
   </style>
 </head>
 <body>
 
   <div class="admin-container">
-    <div class="header-bar">
-      <h1 class="admin-title">🛡️ Admin Access Logs</h1>
-      <button class="btn-clear" onclick="clearLogs()">Clear All Logs</button>
+    <div class="admin-header">
+      <div class="admin-title">
+        <span>💌 Admin Received Messages</span>
+      </div>
+      <button class="clear-btn" onclick="clearAllData()">Clear All</button>
     </div>
 
-    <div class="stats-card">
-      <div class="stat-box">
-        <h4>Total Unauthorized Attempts</h4>
-        <p id="total-attempts">0</p>
-      </div>
-    </div>
-
-    <div class="table-card">
-      <table>
-        <thead>
-          <tr>
-            <th>Time</th>
-            <th>Attempted Username</th>
-            <th>Attempted Password</th>
-            <th>Error Reason</th>
-          </tr>
-        </thead>
-        <tbody id="logs-table-body">
-          <!-- Logs populate here -->
-        </tbody>
-      </table>
-      <div id="empty-msg" class="empty-state" style="display: none;">
-        ምንም የተሳሳተ የመግባት ሙከራ እስካሁን አልተመዘገበም።
-      </div>
+    <div class="feelings-list" id="feelings-list">
+      <!-- Sent feelings will render here dynamically -->
     </div>
   </div>
 
   <script>
-    function loadLogs() {
-      const logs = JSON.parse(localStorage.getItem('unauthorized_attempts') || '[]');
-      const tbody = document.getElementById('logs-table-body');
-      const emptyMsg = document.getElementById('empty-msg');
-      document.getElementById('total-attempts').innerText = logs.length;
+    const feelingsListContainer = document.getElementById('feelings-list');
 
-      tbody.innerHTML = '';
+    function loadFeelingsData() {
+      feelingsListContainer.innerHTML = '';
+      
+      const storedData = JSON.parse(localStorage.getItem('adminSentFeelings') || '[]');
 
-      if (logs.length === 0) {
-        emptyMsg.style.display = 'block';
+      if (storedData.length === 0) {
+        feelingsListContainer.innerHTML = `
+          <div class="no-data">
+            No feelings or messages received yet! 📩
+          </div>
+        `;
         return;
       }
 
-      emptyMsg.style.display = 'none';
+      // Render messages (Newest first)
+      storedData.reverse().forEach((item) => {
+        const card = document.createElement('div');
+        card.className = 'feeling-card';
 
-      logs.forEach(log => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${log.timestamp}</td>
-          <td style="font-weight: 700; color: #38bdf8;">${log.username}</td>
-          <td style="font-family: monospace; color: #f43f5e;">${log.password}</td>
-          <td><span class="badge-error">${log.reason}</span></td>
+        card.innerHTML = `
+          <div class="card-header">
+            <span class="sender-name">👤 ${escapeHtml(item.senderName || 'Anonymous')}</span>
+            <span class="send-time">🕒 ${escapeHtml(item.time || '')}</span>
+          </div>
+          <div class="card-body">${escapeHtml(item.feelingText || '')}</div>
         `;
-        tbody.appendChild(tr);
+
+        feelingsListContainer.appendChild(card);
       });
     }
 
-    function clearLogs() {
-      if (confirm("እርግጠኛ ነህ ሁሉንም ሎጎች ማጽዳት ትፈልጋለህ?")) {
-        localStorage.removeItem('unauthorized_attempts');
-        loadLogs();
+    function clearAllData() {
+      if (confirm('Are you sure you want to clear all received messages?')) {
+        localStorage.removeItem('adminSentFeelings');
+        loadFeelingsData();
       }
     }
 
-    loadLogs();
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // Load messages on startup
+    loadFeelingsData();
   </script>
 
 </body>
