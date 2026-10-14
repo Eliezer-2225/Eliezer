@@ -1,199 +1,627 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard - Sent Feelings</title>
-  
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Secure Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #f8fafc;
+            padding: 20px;
+            position: relative;
+        }
+        .admin-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 35px 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+        }
+        /* 3-dot setting button */
+        .setting-menu-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #cbd5e1;
+            font-size: 18px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .setting-menu-btn:hover { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+        
+        /* Dropdown menu */
+        .dropdown-menu {
+            position: absolute;
+            top: 65px;
+            right: 20px;
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            width: 180px;
+            display: none;
+            z-index: 100;
+            text-align: left;
+            overflow: hidden;
+        }
+        .dropdown-menu button {
+            width: 100%;
+            padding: 12px 15px;
+            background: transparent;
+            border: none;
+            color: #f8fafc;
+            font-size: 13px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .dropdown-menu button:hover { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        /* Settings Submenu Panel */
+        .submenu-panel {
+            display: none;
+            position: absolute;
+            top: 65px;
+            right: 20px;
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            width: 240px;
+            z-index: 101;
+            text-align: left;
+            overflow: hidden;
+        }
+        .submenu-panel button {
+            width: 100%;
+            padding: 11px 15px;
+            background: transparent;
+            border: none;
+            color: #f8fafc;
+            font-size: 12px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .submenu-panel button:hover { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
 
-    body {
-      min-height: 100vh;
-      width: 100vw;
-      background: #0d1117;
-      color: #e0f2fe;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      padding: 30px 15px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+        .admin-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 24px;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+        .subtitle { font-size: 13px; color: #94a3b8; margin-bottom: 25px; }
+        .input-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; margin-bottom: 5px; font-size: 12px; font-weight: 500; color: #cbd5e1; }
+        input {
+            width: 100%;
+            padding: 11px 15px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            font-size: 14px;
+            color: white;
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus { border-color: #38bdf8; background: rgba(255, 255, 255, 0.1); }
+        .action-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+        }
+        .action-btn:hover { opacity: 0.9; }
+        .error-msg {
+            background: rgba(244, 63, 94, 0.1);
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            color: #fb7185;
+            font-size: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+            font-weight: 500;
+        }
+        /* Dashboard Panel Style */
+        #dashboard-panel { display: none; text-align: center; }
+        .stat-badge {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #38bdf8;
+            font-size: 13px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .log-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 10px;
+            padding-right: 5px;
+        }
+        .log-item {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            color: #e2e8f0;
+            text-align: left;
+        }
+        .log-item span { color: #38bdf8; font-weight: 600; }
+        .log-item.warning { border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.05); }
+        .log-item.warning span { color: #fb7185; }
 
-    .admin-container {
-      width: 100%;
-      max-width: 600px;
-    }
-
-    .admin-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
-      padding-bottom: 15px;
-      border-bottom: 1px solid #30363d;
-    }
-
-    .admin-title {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: #38bdf8;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .clear-btn {
-      padding: 8px 16px;
-      background: #f85149;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-
-    .clear-btn:hover {
-      opacity: 0.85;
-    }
-
-    .feelings-list {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .feeling-card {
-      background: #161b22;
-      border: 1px solid #30363d;
-      border-radius: 14px;
-      padding: 18px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-      position: relative;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .sender-name {
-      font-size: 1rem;
-      font-weight: 800;
-      color: #38bdf8;
-    }
-
-    .send-time {
-      font-size: 0.75rem;
-      color: #8b949e;
-    }
-
-    .card-body {
-      background: #0d1117;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #21262d;
-      color: #f0f6fc;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-
-    .no-data {
-      text-align: center;
-      color: #8b949e;
-      font-size: 1rem;
-      margin-top: 40px;
-      padding: 30px;
-      background: #161b22;
-      border-radius: 14px;
-      border: 1px dashed #30363d;
-    }
-  </style>
+        /* Custom Dark Modals */
+        .custom-modal {
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.75); 
+            backdrop-filter: blur(6px); 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 200;
+        }
+        .modal-content {
+            background: #1e293b; 
+            border: 1px solid rgba(255,255,255,0.15); 
+            padding: 30px; 
+            border-radius: 15px; 
+            width: 90%; 
+            max-width: 380px; 
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+        .link-text {
+            color: #38bdf8;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: underline;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        .link-text:hover { color: #7dd3fc; }
+    </style>
 </head>
 <body>
 
-  <div class="admin-container">
-    <div class="admin-header">
-      <div class="admin-title">
-        <span>💌 Admin Received Messages</span>
-      </div>
-      <button class="clear-btn" onclick="clearAllData()">Clear All</button>
+    <div class="admin-card">
+        
+        <!-- 3-dot Setting Button -->
+        <div class="setting-menu-btn" id="setting-btn" onclick="toggleDropdownMenu()">⋮</div>
+        
+        <!-- Main Dropdown: Settings & About Us -->
+        <div class="dropdown-menu" id="dropdown-menu">
+            <button onclick="toggleSettingsSubmenu(event)">Settings</button>
+            <button onclick="openAboutUsModal()">About Us</button>
+        </div>
+
+        <!-- Settings Submenu Options -->
+        <div class="submenu-panel" id="submenu-panel">
+            <button onclick="openChangeAdminModal()">Change Username & Password</button>
+            <button onclick="showAvailablePasswords()">Available Passwords</button>
+            <button onclick="openSecurityAlertModal()">Security Alert</button>
+            <button onclick="openResetConfirmModal()" style="color: #f87171;">Reset System</button>
+            <button onclick="adminLogout()" style="color: #f87171; border-top: 1px solid rgba(255,255,255,0.08);">Log Out</button>
+        </div>
+
+        <!-- ADMIN LOGIN SECTION -->
+        <div id="admin-login-box">
+            <div class="admin-title">Admin Portal</div>
+            <p class="subtitle">Enter admin credentials to view system activity</p>
+            
+            <div class="input-group">
+                <label for="admin-user">Admin Username</label>
+                <input type="text" id="admin-user" placeholder="Enter admin username...">
+            </div>
+            
+            <div class="input-group">
+                <label for="admin-pass">Admin Password</label>
+                <input type="password" id="admin-pass" placeholder="Enter admin password...">
+            </div>
+
+            <button class="action-btn" onclick="handleAdminLogin()">Admin Login</button>
+            <span class="link-text" onclick="openForgotPasswordModal()" style="margin-top: 12px; display:block;">Forgot Password?</span>
+            <div id="admin-error" class="error-msg">Incorrect Admin Username or Password!</div>
+        </div>
+
+        <!-- ADMIN DASHBOARD SECTION -->
+        <div id="dashboard-panel">
+            <div class="admin-title" style="text-align: center;">Welcome, Admin!</div>
+            <p class="subtitle" style="text-align: center;">Secure main portal dashboard is active</p>
+            
+            <div class="stat-badge" id="admin-counter">Passwords Available: 10 / 10</div>
+            <p style="font-size: 13px; color: #94a3b8; line-height: 1.6;">System is fully monitored. Click the top-right 3-dot settings menu to view Security Alerts, change credentials, or manage system configurations.</p>
+        </div>
+
     </div>
 
-    <div class="feelings-list" id="feelings-list">
-      <!-- Sent feelings will render here dynamically -->
+    <!-- CHANGE USERNAME & PASSWORD MODAL -->
+    <div id="change-admin-modal" class="custom-modal">
+        <div class="modal-content">
+            <div class="admin-title" style="font-size:20px;">Update Credentials</div>
+            <p class="subtitle" style="margin-bottom:15px;">Verify old password to update</p>
+            
+            <div class="input-group">
+                <label>Current Password</label>
+                <input type="password" id="current-admin-pass" placeholder="Enter current password...">
+            </div>
+
+            <div class="input-group">
+                <label>New Admin Username</label>
+                <input type="text" id="new-admin-user" placeholder="Enter new username...">
+            </div>
+
+            <div class="input-group">
+                <label>New Admin Password</label>
+                <input type="password" id="new-admin-pass" placeholder="Enter new password...">
+            </div>
+
+            <div class="input-group" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 12px; margin-top: 12px;">
+                <label style="color: #38bdf8;">Recovery Setup (Favorite Person & 4 Digits)</label>
+                <input type="text" id="recovery-fav-person" placeholder="Favorite person name..." style="margin-bottom: 8px;">
+                <input type="text" id="recovery-fav-pin" placeholder="4-digit code (e.g. 1234)..." maxlength="4">
+            </div>
+            
+            <button class="action-btn" onclick="saveNewAdminCredentials()">Save Changes</button>
+            <button class="action-btn logout-btn" onclick="closeModal('change-admin-modal')" style="background:transparent; border:1px solid rgba(255,255,255,0.2); color:#cbd5e1; margin-top:10px;">Cancel</button>
+        </div>
     </div>
-  </div>
 
-  <script>
-    const feelingsListContainer = document.getElementById('feelings-list');
+    <!-- SECURITY ALERT MODAL -->
+    <div id="security-alert-modal" class="custom-modal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="admin-title" style="font-size:20px;">Security Alert Logs</div>
+            <p class="subtitle" style="margin-bottom:15px;">Monitor unauthorized access attempts</p>
+            
+            <div class="log-list" id="security-log-container"></div>
 
-    function loadFeelingsData() {
-      feelingsListContainer.innerHTML = '';
-      
-      const storedData = JSON.parse(localStorage.getItem('adminSentFeelings') || '[]');
+            <button class="action-btn" onclick="closeModal('security-alert-modal')" style="margin-top: 15px;">Close</button>
+        </div>
+    </div>
 
-      if (storedData.length === 0) {
-        feelingsListContainer.innerHTML = `
-          <div class="no-data">
-            No feelings or messages received yet! 📩
-          </div>
-        `;
-        return;
-      }
+    <!-- FORGOT PASSWORD MODAL -->
+    <div id="forgot-password-modal" class="custom-modal">
+        <div class="modal-content">
+            <div class="admin-title" style="font-size:20px;">Password Recovery</div>
+            <p class="subtitle" style="margin-bottom:15px;">Enter your favorite person and 4-digit code</p>
+            
+            <div class="input-group">
+                <label>Favorite Person Name</label>
+                <input type="text" id="recover-user-person" placeholder="Enter favorite person...">
+            </div>
 
-      // Render messages (Newest first)
-      storedData.reverse().forEach((item) => {
-        const card = document.createElement('div');
-        card.className = 'feeling-card';
+            <div class="input-group">
+                <label>4-Digit Number</label>
+                <input type="text" id="recover-user-pin" placeholder="Enter 4 digits..." maxlength="4">
+            </div>
 
-        card.innerHTML = `
-          <div class="card-header">
-            <span class="sender-name">👤 ${escapeHtml(item.senderName || 'Anonymous')}</span>
-            <span class="send-time">🕒 ${escapeHtml(item.time || '')}</span>
-          </div>
-          <div class="card-body">${escapeHtml(item.feelingText || '')}</div>
-        `;
+            <div class="input-group">
+                <label>Set New Password</label>
+                <input type="password" id="recover-new-pass" placeholder="Enter new password...">
+            </div>
+            
+            <button class="action-btn" onclick="verifyAndResetPassword()">Reset Password</button>
+            <button class="action-btn logout-btn" onclick="closeModal('forgot-password-modal')" style="background:transparent; border:1px solid rgba(255,255,255,0.2); color:#cbd5e1; margin-top:10px;">Cancel</button>
+        </div>
+    </div>
 
-        feelingsListContainer.appendChild(card);
-      });
-    }
+    <!-- AVAILABLE PASSWORDS CUSTOM MODAL -->
+    <div id="passwords-modal" class="custom-modal">
+        <div class="modal-content">
+            <div class="admin-title" style="font-size:20px;">Available Passwords</div>
+            <p class="subtitle" id="passwords-sub-title" style="margin-bottom:15px;"></p>
+            <div id="passwords-list-box" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 12px; border-radius: 8px; font-size: 12px; color: #cbd5e1; max-height: 150px; overflow-y: auto; text-align: left; word-break: break-all; margin-bottom: 15px; line-height: 1.6;"></div>
+            <button class="action-btn" onclick="closeModal('passwords-modal')">Close</button>
+        </div>
+    </div>
 
-    function clearAllData() {
-      if (confirm('Are you sure you want to clear all received messages?')) {
-        localStorage.removeItem('adminSentFeelings');
-        loadFeelingsData();
-      }
-    }
+    <!-- ABOUT US MODAL -->
+    <div id="about-us-modal" class="custom-modal">
+        <div class="modal-content">
+            <div class="admin-title" style="font-size:20px;">About Us</div>
+            <p class="subtitle" style="margin-bottom:15px;">Secure Portal System v2.0</p>
+            <p style="font-size: 12px; color: #cbd5e1; text-align: left; line-height: 1.6; margin-bottom: 20px;">
+                This secure portal system is engineered to monitor user activities, track registration logs, and securely manage system credentials with advanced client-side architecture.
+            </p>
+            <button class="action-btn" onclick="closeModal('about-us-modal')">OK</button>
+        </div>
+    </div>
 
-    function escapeHtml(text) {
-      return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
+    <!-- CUSTOM MESSAGE / ALERT MODAL -->
+    <div id="msg-modal" class="custom-modal">
+        <div class="modal-content">
+            <div class="admin-title" style="font-size:20px;" id="msg-title">Notification</div>
+            <p class="subtitle" id="msg-text" style="margin-bottom:20px; font-size:13px; color:#e2e8f0;"></p>
+            <button class="action-btn" onclick="closeModal('msg-modal')">OK</button>
+        </div>
+    </div>
 
-    // Load messages on startup
-    loadFeelingsData();
-  </script>
+    <!-- RESET SYSTEM CONFIRM MODAL -->
+    <div id="reset-confirm-modal" class="custom-modal">
+        <div class="modal-content">
+            <div class="admin-title" style="font-size:20px; color:#f87171;">Reset System</div>
+            <p class="subtitle" style="margin-bottom:20px; font-size:13px; color:#e2e8f0;">Are you sure you want to wipe all system data and reset everything?</p>
+            <button class="action-btn" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); margin-bottom:10px;" onclick="executeSystemReset()">Yes, Reset</button>
+            <button class="action-btn logout-btn" onclick="closeModal('reset-confirm-modal')" style="background:transparent; border:1px solid rgba(255,255,255,0.2); color:#cbd5e1; margin-top:0;">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        function getAdminCredentials() {
+            return {
+                user: localStorage.getItem("admin_user") || "admin",
+                pass: localStorage.getItem("admin_pass") || "admin123",
+                favPerson: localStorage.getItem("admin_fav_person") || "john",
+                favPin: localStorage.getItem("admin_fav_pin") || "1234"
+            };
+        }
+
+        function showCustomAlert(title, text, isError = false) {
+            let titleEl = document.getElementById("msg-title");
+            titleEl.innerText = title;
+            
+            if (isError) {
+                titleEl.style.background = "linear-gradient(to right, #f43f5e, #fb7185)";
+                titleEl.style.webkitBackgroundClip = "text";
+                titleEl.style.webkitTextFillColor = "transparent";
+            } else {
+                titleEl.style.background = "linear-gradient(to right, #38bdf8, #818cf8)";
+                titleEl.style.webkitBackgroundClip = "text";
+                titleEl.style.webkitTextFillColor = "transparent";
+            }
+
+            document.getElementById("msg-text").innerText = text;
+            document.getElementById("msg-modal").style.display = "flex";
+        }
+
+        function handleAdminLogin() {
+            const u = document.getElementById("admin-user").value.trim();
+            const p = document.getElementById("admin-pass").value.trim();
+            const err = document.getElementById("admin-error");
+            let creds = getAdminCredentials();
+
+            if (u === creds.user && p === creds.pass) {
+                document.getElementById("admin-login-box").style.display = "none";
+                document.getElementById("dashboard-panel").style.display = "block";
+                document.getElementById("setting-btn").style.display = "flex";
+                err.style.display = "none";
+                loadDashboardData();
+            } else {
+                err.style.display = "block";
+            }
+        }
+
+        function toggleDropdownMenu() {
+            let menu = document.getElementById("dropdown-menu");
+            let sub = document.getElementById("submenu-panel");
+            sub.style.display = "none";
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+
+        function toggleSettingsSubmenu(event) {
+            event.stopPropagation();
+            let menu = document.getElementById("dropdown-menu");
+            let sub = document.getElementById("submenu-panel");
+            menu.style.display = "none";
+            sub.style.display = sub.style.display === "block" ? "none" : "block";
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('#setting-btn') && !event.target.closest('#dropdown-menu') && !event.target.closest('#submenu-panel')) {
+                document.getElementById("dropdown-menu").style.display = "none";
+                document.getElementById("submenu-panel").style.display = "none";
+            }
+        }
+
+        function loadDashboardData() {
+            const initialPasswords = [
+                "pass101", "pass102", "pass103", "pass104", "pass105", 
+                "pass606", "pass707", "pass808", "pass909", "pass100"
+            ];
+            let usedInitials = JSON.parse(localStorage.getItem("used_initials") || "[]");
+            let remaining = initialPasswords.length - usedInitials.length;
+            document.getElementById("admin-counter").innerText = `Passwords Available: ${remaining} / ${initialPasswords.length}`;
+
+            let logContainer = document.getElementById("security-log-container");
+            let userLogs = JSON.parse(localStorage.getItem("user_logs") || "[]");
+
+            if (userLogs.length === 0) {
+                logContainer.innerHTML = `<p style="text-align: center; color: #94a3b8; font-size: 12px; padding: 20px;">No security alerts or logs recorded yet.</p>`;
+                return;
+            }
+
+            let htmlContent = "";
+            [...userLogs].reverse().forEach((log, index) => {
+                if (log.type === "WRONG_ATTEMPT") {
+                    htmlContent += `
+                        <div class="log-item warning">
+                            #${userLogs.length - index} - <span>Time:</span> ${log.time}<br>
+                            <span>Alert:</span> ${log.details}<br>
+                            <span>Username:</span> ${log.username} | <span>Typed Pass:</span> ${log.password}
+                        </div>
+                    `;
+                } else {
+                    htmlContent += `
+                        <div class="log-item">
+                            #${userLogs.length - index} - <span>Time:</span> ${log.time}<br>
+                            <span>Registered:</span> ${log.username} | <span>Pass:</span> ${log.password}<br>
+                            <span>Friend:</span> ${log.friend} | <span>Word:</span> ${log.word}
+                        </div>
+                    `;
+                }
+            });
+            logContainer.innerHTML = htmlContent;
+        }
+
+        function showAvailablePasswords() {
+            document.getElementById("dropdown-menu").style.display = "none";
+            document.getElementById("submenu-panel").style.display = "none";
+
+            const initialPasswords = [
+                "pass101", "pass102", "pass103", "pass104", "pass105", 
+                "pass606", "pass707", "pass808", "pass909", "pass100"
+            ];
+            let usedInitials = JSON.parse(localStorage.getItem("used_initials") || "[]");
+            let remainingList = initialPasswords.filter(p => !usedInitials.includes(p));
+
+            document.getElementById("passwords-sub-title").innerText = `Total Available Passwords (${remainingList.length}/10):`;
+            document.getElementById("passwords-list-box").innerText = remainingList.length > 0 ? remainingList.join(", ") : "No passwords available.";
+            document.getElementById("passwords-modal").style.display = "flex";
+        }
+
+        function openChangeAdminModal() {
+            document.getElementById("dropdown-menu").style.display = "none";
+            document.getElementById("submenu-panel").style.display = "none";
+            
+            let creds = getAdminCredentials();
+            document.getElementById("current-admin-pass").value = "";
+            document.getElementById("new-admin-user").value = creds.user;
+            document.getElementById("new-admin-pass").value = "";
+            document.getElementById("recovery-fav-person").value = creds.favPerson;
+            document.getElementById("recovery-fav-pin").value = creds.favPin;
+            document.getElementById("change-admin-modal").style.display = "flex";
+        }
+
+        function openSecurityAlertModal() {
+            document.getElementById("dropdown-menu").style.display = "none";
+            document.getElementById("submenu-panel").style.display = "none";
+            loadDashboardData();
+            document.getElementById("security-alert-modal").style.display = "flex";
+        }
+
+        function openForgotPasswordModal() {
+            document.getElementById("recover-user-person").value = "";
+            document.getElementById("recover-user-pin").value = "";
+            document.getElementById("recover-new-pass").value = "";
+            document.getElementById("forgot-password-modal").style.display = "flex";
+        }
+
+        function openAboutUsModal() {
+            document.getElementById("dropdown-menu").style.display = "none";
+            document.getElementById("submenu-panel").style.display = "none";
+            document.getElementById("about-us-modal").style.display = "flex";
+        }
+
+        function openResetConfirmModal() {
+            document.getElementById("dropdown-menu").style.display = "none";
+            document.getElementById("submenu-panel").style.display = "none";
+            document.getElementById("reset-confirm-modal").style.display = "flex";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        function saveNewAdminCredentials() {
+            let currentPassInput = document.getElementById("current-admin-pass").value.trim();
+            let newUser = document.getElementById("new-admin-user").value.trim();
+            let newPass = document.getElementById("new-admin-pass").value.trim();
+            let favPerson = document.getElementById("recovery-fav-person").value.trim().toLowerCase();
+            let favPin = document.getElementById("recovery-fav-pin").value.trim();
+            let creds = getAdminCredentials();
+
+            if (currentPassInput !== creds.pass) {
+                showCustomAlert("Error", "Incorrect current password! Please enter your correct current password to update credentials.", true);
+                return;
+            }
+            
+            if (newUser.length < 3 || newPass.length < 4) {
+                showCustomAlert("Error", "Username must be at least 3 chars and Password at least 4 chars long!", true);
+                return;
+            }
+
+            if (!favPerson || favPin.length !== 4) {
+                showCustomAlert("Error", "Please enter a valid favorite person name and a 4-digit PIN code!", true);
+                return;
+            }
+
+            localStorage.setItem("admin_user", newUser);
+            localStorage.setItem("admin_pass", newPass);
+            localStorage.setItem("admin_fav_person", favPerson);
+            localStorage.setItem("admin_fav_pin", favPin);
+            closeModal('change-admin-modal');
+            showCustomAlert("Success", "Admin credentials and recovery settings successfully updated!");
+        }
+
+        function verifyAndResetPassword() {
+            let personInput = document.getElementById("recover-user-person").value.trim().toLowerCase();
+            let pinInput = document.getElementById("recover-user-pin").value.trim();
+            let newPassInput = document.getElementById("recover-new-pass").value.trim();
+            let creds = getAdminCredentials();
+
+            if (personInput !== creds.favPerson || pinInput !== creds.favPin) {
+                showCustomAlert("Error", "Incorrect favorite person or 4-digit code! Recovery failed.", true);
+                return;
+            }
+
+            if (newPassInput.length < 4) {
+                showCustomAlert("Error", "New password must be at least 4 chars long!", true);
+                return;
+            }
+
+            localStorage.setItem("admin_pass", newPassInput);
+            closeModal('forgot-password-modal');
+            showCustomAlert("Success", "Password successfully reset! You can now login with your new password.");
+        }
+
+        function executeSystemReset() {
+            localStorage.clear();
+            closeModal('reset-confirm-modal');
+            showCustomAlert("Success", "System successfully reset!");
+            setTimeout(() => { location.reload(); }, 1500);
+        }
+
+        function adminLogout() {
+            document.getElementById("dropdown-menu").style.display = "none";
+            document.getElementById("submenu-panel").style.display = "none";
+            document.getElementById("dashboard-panel").style.display = "none";
+            document.getElementById("setting-btn").style.display = "none";
+            document.getElementById("admin-login-box").style.display = "block";
+            document.getElementById("admin-user").value = "";
+            document.getElementById("admin-pass").value = "";
+        }
+    </script>
 
 </body>
 </html>
