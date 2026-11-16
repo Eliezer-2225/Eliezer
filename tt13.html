@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Access Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Orbitron:wght@500;700;800&family=Pacifico&family=Poppins:wght@500;600;700;800;900&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+        body {
+            background-image: url('image1.jpg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            transition: background-image 0.4s ease-in-out, background-color 0.4s ease-in-out;
+        }
+
+        /* Light Theme (Clean Professional Mode) */
+        body.light-theme {
+            background-image: none !important;
+            background-color: #f1f5f9 !important;
+            color: #0f172a !important;
+        }
+        body.light-theme .top-nav-btn {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1.5px solid #cbd5e1;
+            color: #0f172a;
+        }
+        body.light-theme .portal-card { color: #0f172a !important; }
+        body.light-theme .admin-title { color: #1e293b !important; text-shadow: none !important; }
+        body.light-theme .subtitle { color: #475569 !important; text-shadow: none !important; }
+        body.light-theme .uniform-card {
+            background: #ffffff !important;
+            border: 1.5px solid #cbd5e1 !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06) !important;
+            color: #0f172a !important;
+        }
+        body.light-theme .uniform-card:hover { border-color: #0284c7 !important; background: #f8fafc !important; }
+        body.light-theme .card-title-text { color: #0284c7 !important; }
+        body.light-theme .card-desc-text { color: #64748b !important; }
+        body.light-theme .sidebar-menu, 
+        body.light-theme .dots-dropdown-menu,
+        body.light-theme .modal-content {
+            background: #ffffff !important;
+            color: #0f172a !important;
+            border-color: #cbd5e1 !important;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15) !important;
+        }
+        body.light-theme .sidebar-title,
+        body.light-theme .settings-panel-title { color: #0284c7 !important; }
+        body.light-theme .sidebar-item,
+        body.light-theme .dots-item,
+        body.light-theme .settings-list-item,
+        body.light-theme .theme-option-card {
+            background: #f8fafc !important;
+            border-color: #e2e8f0 !important;
+            color: #0f172a !important;
+        }
+        body.light-theme .sidebar-item:hover,
+        body.light-theme .dots-item:hover,
+        body.light-theme .settings-list-item:hover,
+        body.light-theme .theme-option-card.active {
+            background: #e0f2fe !important;
+            color: #0284c7 !important;
+            border-color: #38bdf8 !important;
+        }
+        body.light-theme .back-settings-btn {
+            background: #e2e8f0;
+            color: #0f172a;
+            border-color: #cbd5e1;
+        }
+
+        .top-nav-btn {
+            position: fixed;
+            top: 25px;
+            background: rgba(15, 23, 42, 0.75);
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            color: #ffffff;
+            font-size: 20px;
+            padding: 10px 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: none;
+            z-index: 1200;
+            transition: 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .top-nav-btn:hover { background: rgba(15, 23, 42, 0.95); border-color: #38bdf8; }
+        
+        #leftMenuBtn { left: 25px; }
+        #rightDotsBtn { right: 25px; }
+
+        .sidebar-menu {
+            position: fixed;
+            top: 0; left: -280px;
+            width: 280px; height: 100vh;
+            background: rgba(15, 23, 42, 0.96);
+            backdrop-filter: blur(20px);
+            z-index: 1500;
+            transition: left 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 35px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .sidebar-menu.active { left: 0; }
+        .sidebar-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 24px;
+            color: #38bdf8;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding-bottom: 10px;
+        }
+        .sidebar-item {
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.2s;
+        }
+        .sidebar-item:hover {
+            background: rgba(56, 189, 248, 0.25);
+            border-color: #38bdf8;
+            padding-left: 18px;
+        }
+
+        .dots-dropdown-menu {
+            display: none;
+            position: fixed;
+            top: 75px; right: 25px;
+            background: rgba(15, 23, 42, 0.96);
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            width: 170px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+            z-index: 1500;
+            backdrop-filter: blur(12px);
+        }
+        .dots-dropdown-menu.show { display: block; }
+        
+        .dots-item {
+            padding: 13px 16px;
+            font-size: 14px;
+            font-weight: 800;
+            color: #ffffff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.2s;
+        }
+        .dots-item:last-child { border-bottom: none; color: #f43f5e; }
+        .dots-item:hover {
+            background: rgba(56, 189, 248, 0.25);
+            padding-left: 20px;
+        }
+        .dots-item:last-child:hover { background: rgba(244, 63, 94, 0.2); }
+
+        /* Modals & Settings Panels */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            justify-content: center; align-items: center;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        
+        .modal-content {
+            background: rgba(15, 23, 42, 0.96);
+            border: 2px solid #38bdf8;
+            padding: 28px; border-radius: 22px;
+            width: 100%; max-width: 460px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(56, 189, 248, 0.4);
+            animation: scaleUp 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        @keyframes scaleUp {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .settings-panel-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #38bdf8;
+            margin-bottom: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Settings List View */
+        .settings-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-align: left;
+        }
+        .settings-list-item {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            padding: 16px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 800;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.3s;
+        }
+        .settings-list-item:hover {
+            background: rgba(56, 189, 248, 0.25);
+            border-color: #38bdf8;
+            padding-left: 20px;
+        }
+
+        .settings-sub-pane {
+            display: none;
+            text-align: left;
+        }
+        .settings-sub-pane.active {
+            display: block;
+        }
+        .back-settings-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            padding: 9px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-bottom: 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+        .back-settings-btn:hover { background: rgba(56, 189, 248, 0.3); border-color: #38bdf8; }
+
+        /* Professional Custom Upload Button Styling */
+        .custom-file-upload {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+            color: #ffffff;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+            text-align: center;
+        }
+        .custom-file-upload:hover { opacity: 0.95; transform: translateY(-2px); }
+
+        /* Theme Option Cards Selector */
+        .theme-options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .theme-option-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 14px;
+            border-radius: 14px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 800;
+            font-size: 13px;
+        }
+        .theme-option-card:hover { border-color: #38bdf8; }
+        .theme-option-card.active {
+            background: rgba(56, 189, 248, 0.25);
+            border-color: #38bdf8;
+            color: #38bdf8;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+        }
+
+        .screen-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            z-index: 1400;
+            display: none;
+        }
+        .screen-overlay.active { display: block; }
+
+        /* Custom Dropdown Fix for Recovery */
+        .custom-dropdown {
+            position: relative;
+            width: 100%;
+            cursor: pointer;
+        }
+        .select-selected {
+            background: rgba(15, 23, 42, 0.85);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            padding: 13px 16px;
+            font-size: 15px;
+            font-weight: 800;
+            color: #cbd5e1;
+            transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .select-selected.has-value { color: #ffffff; }
+        .select-selected:after {
+            content: "\f078";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 12px;
+            color: #38bdf8;
+            transition: transform 0.3s ease;
+        }
+        .custom-dropdown.active .select-selected:after { transform: rotate(180deg); }
+        .select-items {
+            display: none;
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.98);
+            border: 1.5px solid rgba(56, 189, 248, 0.5);
+            border-radius: 12px;
+            overflow: hidden;
+            z-index: 105;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+        }
+        .select-items.show-dropdown { display: block; }
+        .select-items div {
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.2s;
+        }
+        .select-items div:last-child { border-bottom: none; }
+        .select-items div:hover { background: rgba(56, 189, 248, 0.3); color: #38bdf8; padding-left: 20px; }
+
+        .portal-card {
+            background: transparent !important;
+            backdrop-filter: none !important;
+            border: none !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+            width: 100%; max-width: 420px;
+            text-align: center; overflow: visible !important;
+            transition: all 0.4s ease; color: #ffffff; margin-top: 30px;
+            z-index: 10;
+        }
+        .portal-card.home-expanded { 
+            max-width: 900px; 
+            max-height: 82vh; 
+            overflow-y: auto !important; 
+            padding: 10px 10px 20px 10px;
+            margin-top: 65px;
+        }
+        .portal-card.home-expanded::-webkit-scrollbar { width: 6px; }
+        .portal-card.home-expanded::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.5); border-radius: 10px; }
+
+        .admin-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 32px; color: #ffffff;
+            margin-bottom: 10px; font-weight: 800;
+            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.9), 0 0 10px rgba(255,255,255,0.3);
+        }
+        .subtitle { 
+            font-size: 15px; color: #ffffff; 
+            margin-bottom: 24px; font-weight: 800; 
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95); letter-spacing: 0.5px;
+        }
+        .input-group { margin-bottom: 18px; text-align: left; position: relative; }
+        label { 
+            display: block; margin-bottom: 8px; 
+            font-size: 14px; font-weight: 800; color: #ffffff; 
+            text-shadow: 0 2px 6px rgba(0,0,0,0.95); letter-spacing: 0.5px; 
+        }
+        
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        .password-wrapper input {
+            width: 100%;
+            padding: 13px 45px 13px 16px;
+        }
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 16px;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 18px;
+            transition: color 0.2s;
+            z-index: 10;
+        }
+        .toggle-password:hover { color: #38bdf8; }
+
+        input {
+            width: 100%; padding: 13px 16px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-radius: 12px; font-size: 15px; font-weight: 800;
+            color: #ffffff; outline: none; transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        input::placeholder { color: #cbd5e1; font-weight: 700; }
+        input:focus {
+            border-color: #38bdf8; background: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 0 16px rgba(56, 189, 248, 0.7);
+        }
+        
+        .action-btn {
+            width: 100%; padding: 14px;
+            background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+            color: #ffffff; border: none; border-radius: 12px;
+            font-size: 17px; cursor: pointer; font-weight: 800;
+            transition: 0.3s; margin-top: 10px;
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+            letter-spacing: 0.8px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .action-btn:hover { opacity: 0.95; transform: translateY(-2px); }
+        
+        .error-msg, .success-msg {
+            font-size: 14px; padding: 12px; border-radius: 10px; margin-top: 15px; display: none; font-weight: 800;
+        }
+        .error-msg { background: rgba(244, 63, 94, 0.4); border: 1.5px solid #f43f5e; color: #ffffff; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+        .success-msg { background: rgba(34, 197, 94, 0.4); border: 1.5px solid #22c55e; color: #ffffff; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+        
+        .field-error {
+            font-size: 12px;
+            color: #fca5a5;
+            background: rgba(244, 63, 94, 0.25);
+            border: 1px solid #f43f5e;
+            padding: 5px 10px;
+            border-radius: 6px;
+            margin-top: 5px;
+            display: none;
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .info-note {
+            background: rgba(15, 23, 42, 0.9); border-left: 5px solid #38bdf8;
+            padding: 12px 14px; font-size: 13px; color: #ffffff;
+            text-align: left; border-radius: 0 10px 10px 0; margin-bottom: 18px; font-weight: 700;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+        }
+        .footer-links { margin-top: 22px; display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 800; }
+        .footer-links a { color: #38bdf8; text-decoration: none; transition: 0.2s; cursor: pointer; text-shadow: 0 2px 8px rgba(0,0,0,0.95); }
+        .footer-links a:hover { color: #7dd3fc; text-decoration: underline; }
+        .hidden-section { display: none; }
+
+        /* 20 Uniform Cards & 1 Special UI Card */
+        .cards-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 15px;
+            padding-bottom: 20px;
+        }
+        .uniform-card {
+            width: 100%;
+            min-height: 76px;
+            background: rgba(15, 23, 42, 0.78);
+            border: 1.5px solid rgba(56, 189, 248, 0.45);
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            padding: 16px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            cursor: pointer;
+        }
+        .uniform-card:hover {
+            border-color: #38bdf8;
+            background: rgba(15, 23, 42, 0.92);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(56, 189, 248, 0.35);
+        }
+        .card-left-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+        }
+        .card-title-text {
+            font-size: 15px;
+            font-weight: 800;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-desc-text {
+            font-size: 12px;
+            color: #cbd5e1;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .uniform-card.special-ui-card {
+            background: linear-gradient(135deg, rgba(131, 24, 67, 0.85) 0%, rgba(157, 23, 77, 0.75) 50%, rgba(88, 28, 135, 0.85) 100%);
+            border: 2px solid #f472b6;
+            box-shadow: 0 10px 30px rgba(244, 114, 182, 0.45);
+        }
+        .uniform-card.special-ui-card:hover {
+            border-color: #fbcfe8;
+            box-shadow: 0 14px 35px rgba(244, 114, 182, 0.7);
+            transform: translateY(-3px) scale(1.01);
+        }
+        .uniform-card.special-ui-card .card-title-text {
+            color: #fbcfe8;
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+        }
+        .uniform-card.special-ui-card .card-desc-text { color: #fce7f3; }
+        .special-badge {
+            background: rgba(244, 114, 182, 0.3);
+            border: 1px solid #f472b6;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="screen-overlay" id="screenOverlay" onclick="closeAllMenus()"></div>
+
+    <!-- Left Side Bar -->
+    <div class="sidebar-menu" id="sidebarMenu">
+        <div class="sidebar-title"><i class="fa-solid fa-compass"></i> Menu</div>
+        <div class="sidebar-item" onclick="openSettingsModal()">
+            <i class="fa-solid fa-gear"></i> Settings
+        </div>
+        <div class="sidebar-item" onclick="openHelpModal()">
+            <i class="fa-solid fa-circle-question"></i> Help & Support
+        </div>
+    </div>
+
+    <!-- Top Left & Right Buttons -->
+    <button class="top-nav-btn" id="leftMenuBtn" onclick="toggleSidebar(event)">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <button class="top-nav-btn" id="rightDotsBtn" onclick="toggleRightDots(event)">
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+    </button>
+
+    <!-- Right 3-Dot Dropdown Menu -->
+    <div class="dots-dropdown-menu" id="dotsDropdownMenu">
+        <div class="dots-item" onclick="handleRefresh()">
+            <i class="fa-solid fa-rotate"></i> Refresh
+        </div>
+        <div class="dots-item" onclick="openAboutUsModal()">
+            <i class="fa-solid fa-circle-info"></i> About Us
+        </div>
+        <div class="dots-item" onclick="handleLogout()">
+            <i class="fa-solid fa-right-from-bracket"></i> Log Out
+        </div>
+    </div>
+
+    <!-- Settings Modal with List & Back Navigation -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-content">
+            
+            <!-- MAIN SETTINGS LIST VIEW -->
+            <div id="settingsMainListView">
+                <div class="settings-panel-title"><i class="fa-solid fa-gear"></i> Portal Settings</div>
+                <div class="settings-list-container">
+                    <div class="settings-list-item" onclick="openSettingsPane('paneAccountSecurity')">
+                        <span><i class="fa-solid fa-shield-halved" style="color: #38bdf8; margin-right: 10px;"></i> Account Security</span>
+                        <i class="fa-solid fa-chevron-right" style="font-size: 13px; color: #94a3b8;"></i>
+                    </div>
+                    <div class="settings-list-item" onclick="openSettingsPane('paneAppearance')">
+                        <span><i class="fa-solid fa-palette" style="color: #38bdf8; margin-right: 10px;"></i> Appearance & Customization</span>
+                        <i class="fa-solid fa-chevron-right" style="font-size: 13px; color: #94a3b8;"></i>
+                    </div>
+                    <div class="settings-list-item" onclick="openSettingsPane('paneAppInfo')">
+                        <span><i class="fa-solid fa-circle-info" style="color: #38bdf8; margin-right: 10px;"></i> App Info & Version</span>
+                        <i class="fa-solid fa-chevron-right" style="font-size: 13px; color: #94a3b8;"></i>
+                    </div>
+                </div>
+                <button class="action-btn" onclick="closeSettingsModal()" style="margin-top: 25px; background: rgba(255,255,255,0.2); border: 1.5px solid rgba(255,255,255,0.4);">Close</button>
+            </div>
+
+            <!-- SUB-PANE 1: Account Security -->
+            <div id="paneAccountSecurity" class="settings-sub-pane">
+                <button class="back-settings-btn" onclick="backToSettingsList()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                <div class="settings-panel-title" style="font-size: 17px;"><i class="fa-solid fa-shield-halved"></i> Account Security</div>
+                
+                <div class="input-group" style="margin-bottom: 10px;">
+                    <label style="font-size: 12px;">Current Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="set-cur-pass" placeholder="Enter current password..." style="padding: 10px 40px 10px 12px; font-size: 13px;">
+                        <i class="fa-solid fa-eye-slash toggle-password" onclick="togglePasswordVisibility('set-cur-pass', this)" style="font-size: 14px;"></i>
+                    </div>
+                </div>
+                <div class="input-group" style="margin-bottom: 10px;">
+                    <label style="font-size: 12px;">New Username</label>
+                    <input type="text" id="set-new-user" placeholder="Enter new username..." style="padding: 10px 12px; font-size: 13px;">
+                </div>
+                <div class="input-group" style="margin-bottom: 10px;">
+                    <label style="font-size: 12px;">New Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="set-new-pass" placeholder="Enter new password..." style="padding: 10px 40px 10px 12px; font-size: 13px;">
+                        <i class="fa-solid fa-eye-slash toggle-password" onclick="togglePasswordVisibility('set-new-pass', this)" style="font-size: 14px;"></i>
+                    </div>
+                </div>
+                <button class="action-btn" onclick="saveAccountSecurityChanges()" style="padding: 10px; font-size: 14px; margin-top: 5px;">Update Credentials</button>
+                <div id="sec-success-msg" class="success-msg" style="margin-top: 8px; padding: 8px; font-size: 12px;"></div>
+                <div id="sec-error-msg" class="error-msg" style="margin-top: 8px; padding: 8px; font-size: 12px;"></div>
+
+                <div style="border-top: 1px solid rgba(255,255,255,0.15); margin-top: 18px; padding-top: 15px;">
+                    <h4 style="font-size: 13px; color: #7dd3fc; margin-bottom: 10px; font-weight: 800;"><i class="fa-solid fa-key"></i> Security Questions Setup</h4>
+                    <div class="input-group" style="margin-bottom: 10px;">
+                        <label style="font-size: 12px;">Favorite Friend's Name</label>
+                        <input type="text" id="set-q1" placeholder="Update friend name..." style="padding: 10px 12px; font-size: 13px;">
+                    </div>
+                    <div class="input-group" style="margin-bottom: 10px;">
+                        <label style="font-size: 12px;">Security Word</label>
+                        <input type="text" id="set-q4" placeholder="Update security word..." style="padding: 10px 12px; font-size: 13px;">
+                    </div>
+                    <button class="action-btn" onclick="saveSecurityQuestions()" style="padding: 10px; font-size: 14px; margin-top: 5px; background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);">Update Questions</button>
+                    <div id="q-success-msg" class="success-msg" style="margin-top: 8px; padding: 8px; font-size: 12px;"></div>
+                </div>
+            </div>
+
+            <!-- SUB-PANE 2: Appearance & Customization -->
+            <div id="paneAppearance" class="settings-sub-pane">
+                <button class="back-settings-btn" onclick="backToSettingsList()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                <div class="settings-panel-title" style="font-size: 17px;"><i class="fa-solid fa-palette"></i> Appearance & Customization</div>
+                
+                <div class="input-group" style="margin-bottom: 15px;">
+                    <label style="font-size: 12px;">Wallpaper Changer</label>
+                    <label for="wallpaperInput" class="custom-file-upload">
+                        <i class="fa-solid fa-image"></i> Choose Wallpaper Image
+                    </label>
+                    <input type="file" id="wallpaperInput" accept="image/*" onchange="changeWallpaper(event)" style="display: none;">
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <label style="font-size: 12px; margin-bottom: 8px;"><i class="fa-solid fa-circle-half-stroke" style="color: #38bdf8;"></i> Theme Mode (Brightness)</label>
+                    <div class="theme-options-grid">
+                        <div class="theme-option-card active" id="themeDarkBtn" onclick="setThemeMode('dark')">
+                            <i class="fa-solid fa-moon" style="display: block; font-size: 18px; margin-bottom: 5px;"></i> Dark Glass
+                        </div>
+                        <div class="theme-option-card" id="themeLightBtn" onclick="setThemeMode('light')">
+                            <i class="fa-solid fa-sun" style="display: block; font-size: 18px; margin-bottom: 5px;"></i> Clean Light
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUB-PANE 3: App Info & Version -->
+            <div id="paneAppInfo" class="settings-sub-pane">
+                <button class="back-settings-btn" onclick="backToSettingsList()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                <div class="settings-panel-title" style="font-size: 17px;"><i class="fa-solid fa-circle-info"></i> App Info & Version</div>
+                
+                <p style="font-size: 14px; color: #cbd5e1; font-weight: 600; line-height: 1.6; margin-top: 15px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                    Secure Access Portal<br>
+                    <strong>Version:</strong> v3.5.0 Official Elite<br>
+                    <strong>Architecture:</strong> Secure Multi-Layer Gateway<br>
+                    <strong>Lead Architect:</strong> Eliezer
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Help & Support Modal -->
+    <div class="modal-overlay" id="helpModal">
+        <div class="modal-content">
+            <div class="admin-title" style="font-size: 26px; margin-bottom: 12px; color: #38bdf8;">Help & Support</div>
+            <p style="font-size: 14px; color: #e2e8f0; line-height: 1.7; margin-bottom: 22px; font-weight: 700; text-align: left;">
+                Welcome to the official <strong>Eliezer Secure Portal Support Center</strong>.<br><br>
+                • Use your authorized credentials to access the 20 secure dashboard modules.<br>
+                • Access <strong>Settings</strong> from the left sidebar to manage your password, wallpaper, and brightness mode.<br>
+                • Use the top-right 3-dot menu to refresh sessions, view Eliezer's portal architecture info, or securely log out.
+            </p>
+            <button class="action-btn" onclick="closeHelpModal()">Got It</button>
+        </div>
+    </div>
+
+    <!-- About Us Modal -->
+    <div class="modal-overlay" id="aboutUsModal">
+        <div class="modal-content">
+            <div class="admin-title" style="font-size: 28px; margin-bottom: 12px; color: #38bdf8;">About Eliezer Portal</div>
+            <p style="font-size: 14px; color: #e2e8f0; line-height: 1.7; margin-bottom: 22px; font-weight: 700; text-align: left;">
+                This high-level professional secure access portal has been meticulously engineered and designed by <strong>Eliezer</strong>. Built with complex cryptographic session architecture, responsive glassmorphism UI/UX aesthetics, and robust multi-layered validation layers, this platform represents the pinnacle of modern web engineering and secure user management.
+            </p>
+            <button class="action-btn" onclick="closeAboutUsModal()">Close Portal Info</button>
+        </div>
+    </div>
+
+    <div class="portal-card" id="main-card-container">
+        
+        <div id="auth-container">
+            <div class="admin-title">Security by Admin Protected</div>
+            <p class="subtitle" id="form-subtitle">Please enter required credentials</p>
+            
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username...">
+            </div>
+            
+            <div class="input-group">
+                <label for="password" id="pass-label">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" placeholder="Enter password...">
+                    <i class="fa-solid fa-eye-slash toggle-password" onclick="togglePasswordVisibility('password', this)"></i>
+                </div>
+            </div>
+
+            <button class="action-btn" id="submit-btn" onclick="handleAuthProcess()">Sign Up</button>
+            <div id="error-text" class="error-msg"></div>
+            
+            <div class="footer-links">
+                <a id="left-footer-link" onclick="handleLeftFooterAction()">Forgotten?</a>
+                <a id="right-footer-link" onclick="toggleAuthMode()">Already have an account? Log In</a>
+            </div>
+        </div>
+
+        <div id="change-pass-container" class="hidden-section">
+            <div class="admin-title" id="setup-title">Security Setup</div>
+            <p class="subtitle" id="setup-subtitle">Set your new password and security questions.</p>
+            
+            <div class="input-group">
+                <label for="new-password">New Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="new-password" placeholder="Enter new password...">
+                    <i class="fa-solid fa-eye-slash toggle-password" onclick="togglePasswordVisibility('new-password', this)"></i>
+                </div>
+                <div id="err-new-pass" class="field-error"></div>
+            </div>
+            <div class="input-group">
+                <label for="confirm-password">Confirm Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="confirm-password" placeholder="Confirm new password...">
+                    <i class="fa-solid fa-eye-slash toggle-password" onclick="togglePasswordVisibility('confirm-password', this)"></i>
+                </div>
+                <div id="err-confirm-pass" class="field-error"></div>
+            </div>
+
+            <div class="info-note" id="setup-info-note">
+                "If you ever forget your password, you will use this information to reset it via Forgotten!"
+            </div>
+            
+            <div id="questions-section">
+                <div class="input-group">
+                    <label>1. Favorite Friend's Name</label>
+                    <input type="text" id="q1-friend" placeholder="e.g. Bestie">
+                    <div id="err-q1" class="field-error"></div>
+                </div>
+                <div class="input-group">
+                    <label>2. Your Security Word</label>
+                    <input type="text" id="q4-sec" placeholder="e.g. SecretKey">
+                    <div id="err-q4" class="field-error"></div>
+                </div>
+            </div>
+            
+            <button class="action-btn" onclick="saveNewPasswordAndHints()">Save & Continue</button>
+        </div>
+
+        <div id="forgotten-container" class="hidden-section">
+            <div class="admin-title">Account Recovery</div>
+            <p class="subtitle">Select a security question and enter its answer.</p>
+
+            <div class="input-group">
+                <label>Select Security Question</label>
+                <div class="custom-dropdown" id="customDropdown">
+                    <div class="select-selected" id="selectedOptionText" data-value="" onclick="toggleDropdown(event)">Select security question...</div>
+                    <div class="select-items" id="dropdownItems"></div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="rec-answer">Your Answer</label>
+                <input type="text" id="rec-answer" placeholder="Enter your answer...">
+            </div>
+            
+            <button class="action-btn" onclick="verifyRecoveryAnswer()">Verify & Reset</button>
+            <div id="rec-error-text" class="error-msg"></div>
+            
+            <div class="footer-links" style="margin-top: 15px; justify-content: center;">
+                <a onclick="backToLogin()">Back to Sign Up</a>
+            </div>
+        </div>
+
+        <!-- Home Container -->
+        <div id="home-container" class="hidden-section"></div>
+
+    </div>
+
+    <script>
+        const initialValidPasswords = [
+            "pass101", "pass102", "pass103", "pass104", "pass105", 
+            "pass606", "pass707", "pass808", "pass909", "pass100"
+        ];
+
+        const allQuestions = {
+            1: "Favorite Friend's Name",
+            2: "Your Security Word"
+        };
+
+        let pendingUser = "";
+        let pendingInitialPass = "";
+        let loggedInUser = "";
+        let isRecoveryMode = false;
+        let isLoginView = false;
+
+        window.onload = function() {
+            checkCooldownStatus();
+            
+            let activeSessionUser = sessionStorage.getItem("active_session_user");
+            if (activeSessionUser) {
+                loggedInUser = activeSessionUser;
+                showHomePage(loggedInUser);
+                return;
+            }
+
+            let registeredUsers = JSON.parse(localStorage.getItem("reg_users") || "{}");
+            if (Object.keys(registeredUsers).length > 0) {
+                setLoginMode(true);
+            } else {
+                setLoginMode(false);
+            }
+            updateDropdownItems("");
+        };
+
+        function openSettingsModal() {
+            closeAllMenus();
+            backToSettingsList();
+            document.getElementById("settingsModal").classList.add("active");
+            document.getElementById("set-new-user").value = loggedInUser;
+        }
+        function closeSettingsModal() {
+            document.getElementById("settingsModal").classList.remove("active");
+        }
+
+        function openSettingsPane(paneId) {
+            document.getElementById("settingsMainListView").style.display = "none";
+            document.querySelectorAll(".settings-sub-pane").forEach(pane => pane.classList.remove("active"));
+            document.getElementById(paneId).classList.add("active");
+        }
+
+        function backToSettingsList() {
+            document.querySelectorAll(".settings-sub-pane").forEach(pane => pane.classList.remove("active"));
+            document.getElementById("settingsMainListView").style.display = "block";
+        }
+
+        function openHelpModal() {
+            closeAllMenus();
+            document.getElementById("helpModal").classList.add("active");
+        }
+        function closeHelpModal() {
+            document.getElementById("helpModal").classList.remove("active");
+        }
+
+        function openAboutUsModal() {
+            closeAllMenus();
+            document.getElementById("aboutUsModal").classList.add("active");
+        }
+        function closeAboutUsModal() {
+            document.getElementById("aboutUsModal").classList.remove("active");
+        }
+
+        // Account Security Update
+        function saveAccountSecurityChanges() {
+            const curPass = document.getElementById("set-cur-pass").value.trim();
+            const newUser = document.getElementById("set-new-user").value.trim();
+            const newPass = document.getElementById("set-new-pass").value.trim();
+            const succMsg = document.getElementById("sec-success-msg");
+            const errMsg = document.getElementById("sec-error-msg");
+
+            succMsg.style.display = "none";
+            errMsg.style.display = "none";
+
+            let registeredUsers = JSON.parse(localStorage.getItem("reg_users") || "{}");
+            if (!curPass || registeredUsers[loggedInUser] !== curPass) {
+                errMsg.innerText = "Current password is incorrect!";
+                errMsg.style.display = "block";
+                return;
+            }
+
+            if (!newUser) {
+                errMsg.innerText = "Username cannot be empty!";
+                errMsg.style.display = "block";
+                return;
+            }
+
+            if (newUser !== loggedInUser && registeredUsers[newUser]) {
+                errMsg.innerText = "Username already exists!";
+                errMsg.style.display = "block";
+                return;
+            }
+
+            let finalPass = newPass ? newPass : curPass;
+            if (newPass && newPass.length < 4) {
+                errMsg.innerText = "Password must be at least 4 characters!";
+                errMsg.style.display = "block";
+                return;
+            }
+
+            delete registeredUsers[loggedInUser];
+            registeredUsers[newUser] = finalPass;
+            localStorage.setItem("reg_users", JSON.stringify(registeredUsers));
+
+            let securityHints = JSON.parse(localStorage.getItem("sec_hints") || "{}");
+            if (securityHints[loggedInUser]) {
+                securityHints[newUser] = securityHints[loggedInUser];
+                delete securityHints[loggedInUser];
+                localStorage.setItem("sec_hints", JSON.stringify(securityHints));
+            }
+
+            loggedInUser = newUser;
+            sessionStorage.setItem("active_session_user", loggedInUser);
+
+            succMsg.innerText = "Account security credentials updated successfully!";
+            succMsg.style.display = "block";
+
+            document.getElementById("set-cur-pass").value = "";
+            document.getElementById("set-new-pass").value = "";
+            setTimeout(() => { showHomePage(loggedInUser); }, 1000);
+        }
+
+        function saveSecurityQuestions() {
+            const q1 = document.getElementById("set-q1").value.trim();
+            const q4 = document.getElementById("set-q4").value.trim();
+            const qSucc = document.getElementById("q-success-msg");
+            qSucc.style.display = "none";
+
+            if (!q1 && !q4) return;
+
+            let securityHints = JSON.parse(localStorage.getItem("sec_hints") || "{}");
+            if (!securityHints[loggedInUser]) securityHints[loggedInUser] = {};
+
+            if (q1) securityHints[loggedInUser].q1 = q1.toLowerCase();
+            if (q4) securityHints[loggedInUser].q4 = q4.toLowerCase();
+
+            localStorage.setItem("sec_hints", JSON.stringify(securityHints));
+            qSucc.innerText = "Security questions updated successfully!";
+            qSucc.style.display = "block";
+            document.getElementById("set-q1").value = "";
+            document.getElementById("set-q4").value = "";
+        }
+
+        // Professional Wallpaper Changer
+        function changeWallpaper(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.body.style.backgroundImage = `url('${e.target.result}')`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Theme Mode Selector (Dark Glass / Clean Light) with Active Selection UI
+        function setThemeMode(mode) {
+            const darkCard = document.getElementById("themeDarkBtn");
+            const lightCard = document.getElementById("themeLightBtn");
+
+            if (mode === 'light') {
+                document.body.classList.add("light-theme");
+                lightCard.classList.add("active");
+                darkCard.classList.remove("active");
+            } else {
+                document.body.classList.remove("light-theme");
+                darkCard.classList.add("active");
+                lightCard.classList.remove("active");
+            }
+        }
+
+        function handleRefresh() {
+            closeAllMenus();
+            if (loggedInUser) {
+                showHomePage(loggedInUser);
+            }
+        }
+
+        function handleLogout() {
+            closeAllMenus();
+            sessionStorage.removeItem("active_session_user");
+            loggedInUser = "";
+
+            document.getElementById("home-container").style.display = "none";
+            document.getElementById("home-container").innerHTML = "";
+            document.getElementById("main-card-container").classList.remove("home-expanded");
+            document.getElementById("leftMenuBtn").style.display = "none";
+            document.getElementById("rightDotsBtn").style.display = "none";
+
+            document.getElementById("username").value = "";
+            document.getElementById("password").value = "";
+            document.getElementById("auth-container").style.display = "block";
+
+            let registeredUsers = JSON.parse(localStorage.getItem("reg_users") || "{}");
+            setLoginMode(Object.keys(registeredUsers).length > 0);
+        }
+
+        function showHomePage(username) {
+            document.getElementById("auth-container").style.display = "none";
+            document.getElementById("change-pass-container").classList.add("hidden-section");
+            document.getElementById("forgotten-container").classList.add("hidden-section");
+            document.getElementById("main-card-container").classList.add("home-expanded");
+            
+            const homeContainer = document.getElementById("home-container");
+            homeContainer.style.display = "block";
+
+            let cardsHTML = `
+                <div style="text-align: center; margin-bottom: 18px;">
+                    <h2 class="admin-title">Welcome, ${username}!</h2>
+                    <p class="subtitle">Secure Portal Modules</p>
+                </div>
+                <div class="cards-list-container">
+            `;
+
+            for (let i = 1; i <= 20; i++) {
+                if (i === 20) {
+                    cardsHTML += `
+                        <div class="uniform-card special-ui-card">
+                            <div class="card-left-info">
+                                <div class="card-title-text"><i class="fa-solid fa-crown"></i> VIP Exclusive Card #${i}</div>
+                                <div class="card-desc-text">Special edition module with enhanced custom interface</div>
+                            </div>
+                            <span class="special-badge">SPECIAL</span>
+                        </div>
+                    `;
+                } else {
+                    cardsHTML += `
+                        <div class="uniform-card">
+                            <div class="card-left-info">
+                                <div class="card-title-text"><i class="fa-solid fa-shield-halved"></i> Portal Module #${i}</div>
+                                <div class="card-desc-text">Standard encrypted workspace node #${i}</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right" style="color: #38bdf8; font-size: 15px;"></i>
+                        </div>
+                    `;
+                }
+            }
+
+            cardsHTML += `</div>`;
+            homeContainer.innerHTML = cardsHTML;
+
+            document.getElementById("leftMenuBtn").style.display = "block";
+            document.getElementById("rightDotsBtn").style.display = "block";
+        }
+
+        function toggleSidebar(e) {
+            e.stopPropagation();
+            const sidebar = document.getElementById("sidebarMenu");
+            const overlay = document.getElementById("screenOverlay");
+            sidebar.classList.toggle("active");
+            if (sidebar.classList.contains("active")) {
+                overlay.classList.add("active");
+            } else {
+                overlay.classList.remove("active");
+            }
+            document.getElementById("dotsDropdownMenu").classList.remove("show");
+        }
+
+        function toggleRightDots(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById("dotsDropdownMenu");
+            const overlay = document.getElementById("screenOverlay");
+            dropdown.classList.toggle("show");
+            if (dropdown.classList.contains("show")) {
+                overlay.classList.add("active");
+            } else {
+                overlay.classList.remove("active");
+            }
+            document.getElementById("sidebarMenu").classList.remove("active");
+        }
+
+        function closeAllMenus() {
+            document.getElementById("sidebarMenu").classList.remove("active");
+            document.getElementById("dotsDropdownMenu").classList.remove("show");
+            document.getElementById("screenOverlay").classList.remove("active");
+        }
+
+        function togglePasswordVisibility(inputId, iconElement) {
+            const inputField = document.getElementById(inputId);
+            if (!inputField) return;
+
+            if (inputField.type === "password") {
+                inputField.type = "text";
+                iconElement.classList.remove("fa-eye-slash");
+                iconElement.classList.add("fa-eye");
+            } else {
+                inputField.type = "password";
+                iconElement.classList.remove("fa-eye");
+                iconElement.classList.add("fa-eye-slash");
+            }
+        }
+
+        function setLoginMode(loginState) {
+            isLoginView = loginState;
+            const submitBtn = document.getElementById("submit-btn");
+            const formSubtitle = document.getElementById("form-subtitle");
+            const leftLink = document.getElementById("left-footer-link");
+            const rightLink = document.getElementById("right-footer-link");
+
+            if (loginState) {
+                submitBtn.innerText = "Log In";
+                formSubtitle.innerText = "Welcome back! Please Log In with your username & password.";
+                leftLink.style.display = "inline";
+                leftLink.innerText = "Forgotten?";
+                rightLink.innerText = "New account? Sign Up";
+            } else {
+                submitBtn.innerText = "Sign Up";
+                formSubtitle.innerText = "Please enter initial credentials";
+                leftLink.style.display = "inline";
+                leftLink.innerText = "Forgotten?";
+                rightLink.innerText = "Already have an account? Log In";
+            }
+            document.getElementById("error-text").style.display = "none";
+        }
+
+        function toggleAuthMode() { setLoginMode(!isLoginView); }
+        function handleLeftFooterAction() { showForgottenModal(); }
+
+        function updateDropdownItems(currentVal) {
+            const dropdownItems = document.getElementById("dropdownItems");
+            if(!dropdownItems) return;
+            dropdownItems.innerHTML = "";
+            for (let key in allQuestions) {
+                if (String(key) !== String(currentVal)) {
+                    let div = document.createElement("div");
+                    div.innerText = allQuestions[key];
+                    div.setAttribute("onclick", `selectOption(${key}, "${allQuestions[key]}")`);
+                    dropdownItems.appendChild(div);
+                }
+            }
+        }
+
+        function toggleDropdown(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById("customDropdown");
+            const items = document.getElementById("dropdownItems");
+            items.classList.toggle("show-dropdown");
+            dropdown.classList.toggle("active");
+        }
+
+        function selectOption(val, text) {
+            const selectedText = document.getElementById("selectedOptionText");
+            selectedText.innerText = text;
+            selectedText.setAttribute("data-value", val);
+            selectedText.classList.add("has-value");
+            updateDropdownItems(val);
+            document.getElementById("dropdownItems").classList.remove("show-dropdown");
+            document.getElementById("customDropdown").classList.remove("active");
+        }
+
+        window.addEventListener("click", function() {
+            const dropdown = document.getElementById("customDropdown");
+            const items = document.getElementById("dropdownItems");
+            if (items && items.classList.contains("show-dropdown")) {
+                items.classList.remove("show-dropdown");
+                dropdown.classList.remove("active");
+            }
+        });
+
+        function checkCooldownStatus() {
+            let lockoutTime = localStorage.getItem("lockout_until");
+            if (lockoutTime) {
+                let remainingTime = Math.ceil((parseInt(lockoutTime) - Date.now()) / 1000);
+                if (remainingTime > 0) {
+                    lockUI(remainingTime);
+                } else {
+                    localStorage.removeItem("lockout_until");
+                }
+            }
+        }
+
+        function lockUI(seconds) {
+            let btn = document.getElementById("submit-btn");
+            let err = document.getElementById("error-text");
+            btn.disabled = true;
+            
+            let interval = setInterval(() => {
+                seconds--;
+                err.innerText = `Too many failed attempts. Try again in ${seconds}s`;
+                err.style.display = "block";
+                
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    btn.disabled = false;
+                    err.style.display = "none";
+                    localStorage.removeItem("wrong_attempts");
+                    localStorage.removeItem("lockout_until");
+                }
+            }, 1000);
+        }
+
+        function handleAuthProcess() {
+            const userVal = document.getElementById("username").value.trim();
+            const passVal = document.getElementById("password").value.trim();
+            const errorText = document.getElementById("error-text");
+
+            if (!userVal || !passVal) {
+                errorText.innerText = "Please fill in all fields!";
+                errorText.style.display = "block";
+                return;
+            }
+
+            let registeredUsers = JSON.parse(localStorage.getItem("reg_users") || "{}");
+            let usedInitials = JSON.parse(localStorage.getItem("used_initials") || "[]");
+
+            if (!isLoginView) {
+                if (initialValidPasswords.includes(passVal)) {
+                    if (usedInitials.includes(passVal)) {
+                        errorText.innerText = "This initial password has already been used!";
+                        errorText.style.display = "block";
+                        logWrongAttempt(userVal, passVal, "Used Initial Password Attempt");
+                        return;
+                    }
+                    
+                    pendingUser = userVal;
+                    pendingInitialPass = passVal;
+                    isRecoveryMode = false;
+                    localStorage.removeItem("wrong_attempts");
+
+                    document.getElementById("questions-section").style.display = "block";
+                    document.getElementById("setup-title").innerText = "Security Setup";
+                    document.getElementById("setup-subtitle").innerText = "Set your new password and security questions.";
+                    document.getElementById("setup-info-note").style.display = "block";
+
+                    document.getElementById("auth-container").style.display = "none";
+                    document.getElementById("change-pass-container").style.display = "block";
+                } else {
+                    handleWrongPassword(userVal, passVal, "Invalid Initial Password");
+                }
+            } else {
+                if (registeredUsers[userVal] && registeredUsers[userVal] === passVal) {
+                    loggedInUser = userVal;
+                    localStorage.removeItem("wrong_attempts");
+                    
+                    sessionStorage.setItem("active_session_user", loggedInUser);
+                    showHomePage(loggedInUser);
+                } else {
+                    handleWrongPassword(userVal, passVal, "Incorrect Password");
+                }
+            }
+        }
+
+        function handleWrongPassword(username, password, reason) {
+            const errorText = document.getElementById("error-text");
+            errorText.innerText = "Invalid credentials! Please check and try again.";
+            errorText.style.display = "block";
+
+            logWrongAttempt(username, password, reason);
+
+            let attempts = parseInt(localStorage.getItem("wrong_attempts") || "0") + 1;
+            localStorage.setItem("wrong_attempts", attempts);
+
+            if (attempts >= 3) {
+                let lockoutDuration = attempts === 3 ? 30000 : 60000; 
+                let lockoutUntil = Date.now() + lockoutDuration;
+                localStorage.setItem("lockout_until", lockoutUntil);
+                lockUI(lockoutDuration / 1000);
+            }
+        }
+
+        function logWrongAttempt(username, password, reason) {
+            let userLogs = JSON.parse(localStorage.getItem("user_logs") || "[]");
+            let currentTime = new Date().toLocaleString();
+            userLogs.push({
+                type: "WRONG_ATTEMPT",
+                username: username || "Unknown",
+                password: password,
+                details: reason,
+                time: currentTime
+            });
+            localStorage.setItem("user_logs", JSON.stringify(userLogs));
+        }
+
+        function showFieldError(elementId, message) {
+            const errEl = document.getElementById(elementId);
+            errEl.innerText = message;
+            errEl.style.display = "block";
+            
+            setTimeout(() => {
+                errEl.style.display = "none";
+            }, 3500);
+        }
+
+        function saveNewPasswordAndHints() {
+            const newPass = document.getElementById("new-password").value.trim();
+            const confirmPass = document.getElementById("confirm-password").value.trim();
+
+            let hasError = false;
+
+            if (newPass !== confirmPass) {
+                showFieldError("err-confirm-pass", "Password doesn't match!");
+                hasError = true;
+            }
+
+            if (newPass.length < 4) {
+                showFieldError("err-new-pass", "Password must be at least 4 characters long!");
+                hasError = true;
+            }
+
+            if (!isRecoveryMode) {
+                const q1 = document.getElementById("q1-friend").value.trim();
+                const q4 = document.getElementById("q4-sec").value.trim();
+
+                if (!q1) {
+                    showFieldError("err-q1", "Please fill in this field!");
+                    hasError = true;
+                } else {
+                    const nameRegex = /^[A-Za-zÀ-ÿ\s]+$/;
+                    if (!nameRegex.test(q1)) {
+                        showFieldError("err-q1", "Numbers or special characters are not allowed!");
+                        hasError = true;
+                    }
+                }
+
+                if (!q4) {
+                    showFieldError("err-q4", "Please fill in this field!");
+                    hasError = true;
+                } else {
+                    if (q4.length < 4) {
+                        showFieldError("err-q4", "Security word must be at least 4 characters!");
+                        hasError = true;
+                    }
+                }
+            }
+
+            if (hasError) return;
+
+            let registeredUsers = JSON.parse(localStorage.getItem("reg_users") || "{}");
+
+            if (!isRecoveryMode) {
+                const q1 = document.getElementById("q1-friend").value.trim();
+                const q4 = document.getElementById("q4-sec").value.trim();
+
+                let usedInitials = JSON.parse(localStorage.getItem("used_initials") || "[]");
+                usedInitials.push(pendingInitialPass);
+                localStorage.setItem("used_initials", JSON.stringify(usedInitials));
+
+                let securityHints = JSON.parse(localStorage.getItem("sec_hints") || "{}");
+                securityHints[pendingUser] = {
+                    q1: q1.toLowerCase(),
+                    q4: q4.toLowerCase()
+                };
+                localStorage.setItem("sec_hints", JSON.stringify(securityHints));
+            }
+
+            registeredUsers[pendingUser] = newPass;
+            localStorage.setItem("reg_users", JSON.stringify(registeredUsers));
+            loggedInUser = pendingUser;
+
+            sessionStorage.setItem("active_session_user", loggedInUser);
+            showHomePage(loggedInUser);
+        }
+
+        function showForgottenModal() {
+            const userVal = document.getElementById("username").value.trim();
+            const loginError = document.getElementById("error-text");
+
+            if (!userVal) {
+                loginError.innerText = "Please enter your username first before clicking Forgotten!";
+                loginError.style.display = "block";
+                return;
+            }
+
+            let registeredUsers = JSON.parse(localStorage.getItem("reg_users") || "{}");
+            if (!registeredUsers[userVal]) {
+                loginError.innerText = "Username not found! Please register first.";
+                loginError.style.display = "block";
+                return;
+            }
+
+            pendingUser = userVal;
+            loginError.style.display = "none";
+            document.getElementById("auth-container").style.display = "none";
+            document.getElementById("forgotten-container").style.display = "block";
+        }
+
+        function backToLogin() {
+            document.getElementById("forgotten-container").style.display = "none";
+            document.getElementById("auth-container").style.display = "block";
+        }
+
+        function verifyRecoveryAnswer() {
+            const selectedQ = document.getElementById("selectedOptionText").getAttribute("data-value");
+            const recAnswer = document.getElementById("rec-answer").value.trim().toLowerCase();
+            const recErrorText = document.getElementById("rec-error-text");
+
+            if (!selectedQ) {
+                recErrorText.innerText = "Please select a security question first!";
+                recErrorText.style.display = "block";
+                return;
+            }
+
+            if (!recAnswer) {
+                recErrorText.innerText = "Please enter your answer!";
+                recErrorText.style.display = "block";
+                return;
+            }
+
+            let securityHints = JSON.parse(localStorage.getItem("sec_hints") || "{}");
+
+            if (securityHints[pendingUser] && securityHints[pendingUser]["q" + selectedQ] === recAnswer) {
+                isRecoveryMode = true;
+                recErrorText.style.display = "none";
+                
+                document.getElementById("questions-section").style.display = "none";
+                document.getElementById("setup-title").innerText = "Reset Password Fields";
+                document.getElementById("setup-subtitle").innerText = "Enter your new secure password.";
+                document.getElementById("setup-info-note").style.display = "none";
+
+                document.getElementById("forgotten-container").style.display = "none";
+                document.getElementById("change-pass-container").style.display = "block";
+            } else {
+                recErrorText.innerText = "Incorrect security answer!";
+                recErrorText.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
